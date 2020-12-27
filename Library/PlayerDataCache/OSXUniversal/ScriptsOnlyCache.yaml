@@ -2,10 +2,10 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - BaseNetworkManager
+    - ClientInstance
     - Colour
     - Eat
     - Move
-    - Spawn
     Mirror.Components.dll:
     - Mirror.NetworkTransform
     Mirror.dll:
@@ -29,9 +29,11 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
@@ -60,6 +62,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 11818}
+    - Class: 114
       Script: {instanceID: 11852}
     - Class: 114
       Script: {instanceID: 11946}
@@ -76,19 +80,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13070}
     - Class: 114
+      Script: {instanceID: 14284}
+    - Class: 114
       Script: {instanceID: 14844}
     - Class: 114
       Script: {instanceID: 14938}
     - Class: 114
       Script: {instanceID: 15058}
     - Class: 114
-      Script: {instanceID: 15096}
-    - Class: 114
       Script: {instanceID: 15242}
     - Class: 114
       Script: {instanceID: 15594}
     - Class: 114
       Script: {instanceID: 15734}
+    - Class: 114
+      Script: {instanceID: 33760}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -98,6 +104,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -452,7 +460,7 @@ ScriptsOnlyBuild:
     className: Player
   - hash:
       serializedVersion: 2
-      Hash: d73315a3f5288cc4a9a625e9289efa6f
+      Hash: 816f06430b25c2f7e62e7fe59ef321f2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Move
@@ -1098,7 +1106,13 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
+  - hash:
+      serializedVersion: 2
+      Hash: 1e81208ba6ecc71a8cc896dcf39ce510
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ClientInstance
   platform: 2
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/GameClient.app
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/GameServer.app

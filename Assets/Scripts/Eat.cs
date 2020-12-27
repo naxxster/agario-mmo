@@ -18,8 +18,6 @@ public class Eat : NetworkBehaviour
     [SyncVar(hook = nameof(SetScore))]
     private int Score = 0;
 
-    private Spawn spawn;
-
     void Start()
     {
         if (Letters == null)
@@ -30,7 +28,6 @@ public class Eat : NetworkBehaviour
         {
             ServerInit();
         }
-        spawn = GameObject.Find("SpawnManager").GetComponent<Spawn>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -74,10 +71,8 @@ public class Eat : NetworkBehaviour
     {
         float newIncrease = Increase * multiply;
         SyncSize += new Vector3(newIncrease, newIncrease, newIncrease);
-
         Score += (10 * (int)multiply);
-        //Call server to destroy managed spawned object.
-        spawn.DestroySpawnObject(target);
+        NetworkServer.Destroy(target);
     }
 
     private void ServerInit()

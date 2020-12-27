@@ -16,12 +16,12 @@ public class Spawn : NetworkBehaviour
     {
         networkManager = NetworkManager.singleton;
         Debug.Log("Spawner On");
-        StartCoroutine(SpawnFood());
+        // StartCoroutine(SpawnFood());
     }
 
     private IEnumerator SpawnFood()
     {
-        while(spawnerCount < 100)
+        while(true)
         {
             int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
             int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
@@ -34,13 +34,7 @@ public class Spawn : NetworkBehaviour
             //Spawn Food Management
             NetworkServer.Spawn(foodObj);
             spawnerCount += 1;
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(2.0f);
         }
-    }
-
-    public void DestroySpawnObject(GameObject target)
-    {
-        spawnerCount -= 1;
-        NetworkServer.Destroy(target);
     }
 }

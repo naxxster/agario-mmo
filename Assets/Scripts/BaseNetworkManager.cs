@@ -1,5 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Mirror;
 
 /*
@@ -9,7 +14,6 @@ using Mirror;
 
 public class BaseNetworkManager : NetworkManager
 {
-
     #region Unity Callbacks
 
     public override void OnValidate()
@@ -130,7 +134,7 @@ public class BaseNetworkManager : NetworkManager
     public override void OnServerConnect(NetworkConnection conn) 
     {
         base.OnServerConnect(conn);
-        // SpawnFood();
+        StartCoroutine(SpawnFood());
     }
 
     /// <summary>
@@ -220,33 +224,79 @@ public class BaseNetworkManager : NetworkManager
     /// This is invoked when a host is started.
     /// <para>StartHost has multiple signatures, but they all cause this hook to be called.</para>
     /// </summary>
-    public override void OnStartHost() { }
+    public override void OnStartHost() 
+    {
+        base.OnStartHost();
+        Debug.Log("[Host] Start Hosting");
+    }
 
     /// <summary>
     /// This is invoked when a server is started - including when a host is started.
     /// <para>StartServer has multiple signatures, but they all cause this hook to be called.</para>
     /// </summary>
-    public override void OnStartServer() { }
+    public override void OnStartServer() 
+    {
+        base.OnStartServer();
+        // NetworkServer.RegisterHandler<ActionMessage>(OnAction);
+    }
 
     /// <summary>
     /// This is invoked when the client is started.
     /// </summary>
-    public override void OnStartClient() { }
+    public override void OnStartClient() 
+    {
+        base.OnStartClient();
+    }
 
     /// <summary>
     /// This is called when a host is stopped.
     /// </summary>
-    public override void OnStopHost() { }
+    public override void OnStopHost() 
+    {
+        base.OnStopHost();
+    }
 
     /// <summary>
     /// This is called when a server is stopped - including when a host is stopped.
     /// </summary>
-    public override void OnStopServer() { }
+    public override void OnStopServer() 
+    {
+        base.OnStopServer();
+    }
 
     /// <summary>
     /// This is called when a client is stopped.
     /// </summary>
-    public override void OnStopClient() { }
+    public override void OnStopClient() 
+    {
+        base.OnStopClient();
+    }
 
     #endregion
+
+    private IEnumerator SpawnFood()
+    {
+        for(int i=0; i<20; i++)
+        {
+            int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
+            int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
+
+            Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
+            pos.z = 0;
+
+            //Implement Custom Prefab Spawning
+            GameObject foodObj = Instantiate(spawnPrefabs[0], pos, Quaternion.identity);
+            //Spawn Food Management
+            NetworkServer.Spawn(foodObj);
+            if (i < 10) 
+            {
+                yield return new WaitForSeconds(2.0f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(5.0f);
+            }
+        }
+    }
+
 }
