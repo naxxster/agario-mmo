@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 5907155108198279555}
   - component: {fileID: 2434398747583656749}
   - component: {fileID: 7491751948149949981}
-  - component: {fileID: -1705798540575048084}
-  - component: {fileID: -875133988502520428}
+  - component: {fileID: -3388082168728912872}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -114,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-1705798540575048084
+--- !u!114 &-3388082168728912872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,28 +122,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2375768864440514148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 209037615, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  m_AssetId: 
-  hasSpawned: 0
---- !u!114 &-875133988502520428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2375768864440514148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
+  NetworkedInstanceId: 0
+  PrefabHash: 17109000704358635821
+  PrefabHashGenerator: Food
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
