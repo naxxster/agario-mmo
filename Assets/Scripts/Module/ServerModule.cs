@@ -7,11 +7,18 @@ using System.Collections;
 
 public class ServerModule : NetworkedBehaviour
 {
+    public static ServerModule Singleton { get; protected set; }
     public GameObject FoodPrefab;
 
     private void Awake()
     {
+        if (Singleton != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(gameObject);
+        Singleton = this;
     }
 
     // Start is called before the first frame update
@@ -20,33 +27,40 @@ public class ServerModule : NetworkedBehaviour
         NetworkingManager.Singleton.OnServerStarted += OnServerStarted;
         NetworkingManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 
-        string activeSceneName = SceneManager.GetActiveScene().name;
-        if (activeSceneName == "Map001")
-        {
-            //Connect to server from Client
-            NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
-            NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 7777;
+#if UNITY_EDITOR
 
-            if (Application.isBatchMode)
+#else
+        if (Application.isBatchMode)
+        {
+            string activeSceneName = SceneManager.GetActiveScene().name;
+            if (activeSceneName == "Map001")
             {
-                Debug.Log("Server Module Start at Port :7777 ");
-                // Only run on Server mode
-                NetworkingManager.Singleton.StartServer();
+                //Connect to server from Client
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 7777;
+
+                if (Application.isBatchMode)
+                {
+                    Debug.Log("Server Module Start at Port :7777 ");
+                    // Only run on Server mode
+                    NetworkingManager.Singleton.StartServer();
+                }
+            }
+            else if (activeSceneName == "Map002")
+            {
+                //Connect to server from Client
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 8888;
+
+                if (Application.isBatchMode)
+                {
+                    Debug.Log("Server Module Start at Port :8888 ");
+                    // Only run on Server mode
+                    NetworkingManager.Singleton.StartServer();
+                }
             }
         }
-        else if (activeSceneName == "Map002")
-        {
-            //Connect to server from Client
-            NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
-            NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 8888;
-
-            if (Application.isBatchMode)
-            {
-                Debug.Log("Server Module Start at Port :8888 ");
-                // Only run on Server mode
-                NetworkingManager.Singleton.StartServer();
-            }
-        }
+#endif
     }
 
     // Update is called once per frame

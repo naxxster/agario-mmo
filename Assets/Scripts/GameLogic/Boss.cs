@@ -19,7 +19,10 @@ public class Boss : NetworkedBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        InvokeClientRpcOnEveryone(DoEatClientRpc, other.gameObject);
+        if (IsServer)
+        {
+            InvokeClientRpcOnEveryone(DoEatClientRpc, other.gameObject);
+        }
     }
 
     [ClientRPC]

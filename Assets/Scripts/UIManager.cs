@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ClientUI : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    public static UIManager Singleton { get; protected set; }
+
     enum UIType
     {
         NORMAL,
@@ -16,15 +18,21 @@ public class ClientUI : MonoBehaviour
     public Button SignInBtn;
     public Button SignUpBtn;
 
-    public ClientModule ClientModule;
-
     private void Awake()
     {
+        if (Singleton != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+        Singleton = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+
         SetNetworkHUD(UIType.NORMAL);
     }
 
@@ -54,11 +62,11 @@ public class ClientUI : MonoBehaviour
         string inputName = NameInputField.text;
         string inputPassword = PasswordInputField.text;
 
-        if (ClientModule.SignIn(inputName, inputPassword))
+        if (ClientModule.Singleton.SignIn(inputName, inputPassword))
         {
             // Login existing server
-            ClientModule.SignInProcess(inputName);
             SetNetworkHUD(UIType.PLAY);
+            ClientModule.Singleton.SignInProcess(inputName);
         }
         else
         {
@@ -71,7 +79,7 @@ public class ClientUI : MonoBehaviour
         string inputName = NameInputField.text;
         string inputPassword = PasswordInputField.text;
 
-        if (ClientModule.SignUp(inputName, inputPassword))
+        if (ClientModule.Singleton.SignUp(inputName, inputPassword))
         {
             Debug.Log("Sign Up Succeeded!");
         }

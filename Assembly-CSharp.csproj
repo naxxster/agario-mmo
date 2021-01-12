@@ -60,7 +60,7 @@
      <Compile Include="Assets\Scripts\Module\ServerModule.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Player.cs" />
      <Compile Include="Assets\Scripts\Module\NetManagerHud.cs" />
-     <Compile Include="Assets\Scripts\ClientUI.cs" />
+     <Compile Include="Assets\Scripts\UIManager.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Boss.cs" />
      <Compile Include="Assets\Scripts\Module\ClientModule.cs" />
      <None Include="Assets\MLAPI\Lib\MLAPI.xml" />

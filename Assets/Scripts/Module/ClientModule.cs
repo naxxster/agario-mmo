@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ClientModule : MonoBehaviour
 {
-    struct ConnectionInfo
+    public static ClientModule Singleton { get; protected set; }
+
+    public struct ConnectionInfo
     {
         private string address;
         private int port;
@@ -30,30 +32,19 @@ public class ClientModule : MonoBehaviour
 
     private void Awake()
     {
+        if (Singleton != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(gameObject);
+        Singleton = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        string activeSceneName = SceneManager.GetActiveScene().name;
-        if (activeSceneName == "Map001" || activeSceneName == "Map002")
-        {
-#if UNITY_EDITOR
-            if (NetworkingManager.Singleton.IsConnectedClient)
-            {
-                DisconnectToServer();
-            }
-            ConnectToServer();
-#else
-            if (!Application.isBatchMode)
-            {
-                ConnectToServer();
-            }
-#endif
-        }
     }
 
     // Update is called once per frame
@@ -64,17 +55,34 @@ public class ClientModule : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("On SceneLoad - " + scene.name);
+        ConnectToServer(GetMatchEndpoint(scene.name));
+    }
 
+    public void MoveToWorld(string worldId)
+    {
+        DisconnectToServer();
+        SceneManager.LoadScene(worldId);
+        //ConnectToServer(connectionInfo);
     }
 
     public void ConnectToServer()
     {
+        string activeSceneName = SceneManager.GetActiveScene().name;
+        ConnectionInfo connectionInfo = GetMatchEndpoint(activeSceneName);
+        Debug.Log("Connect To Server. IP=" + connectionInfo.GetAddress() + ", Port=" + connectionInfo.GetPort());
+        NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = connectionInfo.GetAddress();
+        NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort = connectionInfo.GetPort();
+        NetworkingManager.Singleton.StartClient();
+    }
+
+    public void ConnectToServer(ConnectionInfo connectionInfo)
+    {
         // NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress : Connection Host Address
         // NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort : Port that Client Connect
         // NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort : Port that Server Listen
-        Debug.Log("Connect To Server");
 
-        ConnectionInfo connectionInfo = GetMatchEndpoint();
+        Debug.Log("Connect To Server. IP=" + connectionInfo.GetAddress() + ", Port=" + connectionInfo.GetPort());
         NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = connectionInfo.GetAddress();
         NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort = connectionInfo.GetPort();
         NetworkingManager.Singleton.StartClient();
@@ -82,7 +90,11 @@ public class ClientModule : MonoBehaviour
 
     public void DisconnectToServer()
     {
-        NetworkingManager.Singleton.StopClient();
+        if (NetworkingManager.Singleton.IsConnectedClient)
+        {
+            Debug.Log("Disconnect CLient");
+            NetworkingManager.Singleton.StopClient();
+        }
     }
 
     public bool SignIn(string inputName, string inputPassword)
@@ -93,6 +105,7 @@ public class ClientModule : MonoBehaviour
     public void SignInProcess(string inputName)
     {
         Debug.Log("Sign In Process");
+        MoveToWorld("Map001");
     }
 
     public bool SignUp(string inputName, string inputPassword)
@@ -100,18 +113,18 @@ public class ClientModule : MonoBehaviour
         return true;
     }
 
-    private ConnectionInfo GetMatchEndpoint()
+    private ConnectionInfo GetMatchEndpoint(string worldId)
     {
         //Temp Code
         string activeSceneName = SceneManager.GetActiveScene().name;
         ConnectionInfo connectionInfo = new ConnectionInfo();
 
-        if (activeSceneName == "Map001")
+        if (worldId == "Map001")
         {
             connectionInfo.SetAddress("127.0.0.1");
             connectionInfo.SetPort(7777);
         }
-        else if (activeSceneName == "Map002")
+        else if (worldId == "Map002")
         {
             connectionInfo.SetAddress("127.0.0.1");
             connectionInfo.SetPort(8888);

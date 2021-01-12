@@ -75,11 +75,11 @@ public class Player : NetworkedBehaviour
             string activeSceneName = SceneManager.GetActiveScene().name;
             if (activeSceneName == "Map001")
             {
-                SceneManager.LoadSceneAsync("Map002");
+                ClientModule.Singleton.MoveToWorld("Map002");
             }
             else if (activeSceneName == "Map002")
             {
-                SceneManager.LoadSceneAsync("Map001");
+                ClientModule.Singleton.MoveToWorld("Map001");
             }
         }
     }
