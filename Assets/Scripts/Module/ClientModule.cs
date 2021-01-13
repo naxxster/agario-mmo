@@ -29,6 +29,7 @@ public class ClientModule : MonoBehaviour
             this.port = port;
         }
     }
+    public string PlayerName = "";
 
     private void Awake()
     {
@@ -105,6 +106,7 @@ public class ClientModule : MonoBehaviour
     public void SignInProcess(string inputName)
     {
         Debug.Log("Sign In Process");
+        PlayerName = inputName;
         MoveToWorld("Map001");
     }
 

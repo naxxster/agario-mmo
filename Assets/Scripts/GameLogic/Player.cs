@@ -2,7 +2,6 @@
 using MLAPI.Messaging;
 using MLAPI.NetworkedVar;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Player : NetworkedBehaviour
@@ -10,12 +9,11 @@ public class Player : NetworkedBehaviour
     private float Speed = 5.0f;
     public string Food = "Food";
     public string Enemy = "Player";
+    public string Boss = "Boss";
     public float Increase = 0.1f;
 
     [SyncedVar]
     private int Score = 0;
-
-    public Text Letters;
 
     // Allows you to change the channel position updates are sent on. Its prefered to be UnreliableSequenced for fast paced.
     public string Channel = "MLAPI_DEFAULT_MESSAGE";
@@ -23,10 +21,6 @@ public class Player : NetworkedBehaviour
     public override void NetworkStart()
     {
         // This is called when the object is spawned. Once this gets invoked. The object is ready for RPC and var changes.
-        if (Letters == null)
-        {
-            Letters = GameObject.Find("ScoreText").GetComponentInChildren<Text>();
-        }
         ServerInit();
 
         // TODO : 원격지로부터 데이터를 로드해서 기본 객체를 만드는데 사용할 
@@ -39,6 +33,18 @@ public class Player : NetworkedBehaviour
             PlayerControl();
             PlayerCommand();
         }
+    }
+
+    private void OnGUI()
+    {
+        string text = "<b><i>" + ClientModule.Singleton.PlayerName + "(" + Score + ")</i></b>";
+        var guiPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+        var textSiz = GUI.skin.label.CalcSize(new GUIContent(text));
+        var rect = new Rect(0, 0, textSiz.x, textSiz.y);
+        rect.x = guiPos.x - rect.width/2;
+        rect.y = Screen.height - guiPos.y - rect.height/2;
+        GUI.contentColor = Color.cyan;
+        GUI.Label(rect, text);
     }
 
     private void ServerInit()
@@ -93,12 +99,14 @@ public class Player : NetworkedBehaviour
             Vector3 newSiz = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
             if (target.tag == Food)
             {
-                newSiz += new Vector3(Increase * 1, Increase * 1, Increase * 1);
+                int multiply = transform.localScale.x < 5.0 ? 1 : 0;
+                newSiz += new Vector3(Increase * multiply, Increase * multiply, Increase * multiply);
                 Score += 10;
             }
-            else if (target.tag == Enemy)
+            else if (target.tag == Enemy || target.tag == Boss)
             {
-                newSiz += new Vector3(Increase * 10, Increase * 10, Increase * 10);
+                int multiply = transform.localScale.x < 10.0 ? 10 : 0;
+                newSiz += new Vector3(Increase * multiply, Increase * multiply, Increase * multiply);
                 Score += 100;
             }
             Destroy(target);
@@ -114,6 +122,5 @@ public class Player : NetworkedBehaviour
         // ClientRPC : Invoke by server, Run on Client.
         Destroy(target);
         transform.localScale = size;
-        Letters.text = "SCORE: " + Score;
     }
 }

@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Boss.cs" />
      <Compile Include="Assets\Scripts\Module\ClientModule.cs" />
+     <Compile Include="Assets\Scripts\Module\GameCamera.cs" />
      <None Include="Assets\MLAPI\Lib\MLAPI.xml" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
