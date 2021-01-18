@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - Boss
     - ClientModule
     - Colour
+    - GameCamera
     - Player
     - ServerModule
     MLAPI.dll:
@@ -60,35 +61,37 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11810}
+      Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11848}
+      Script: {instanceID: 11856}
     - Class: 114
-      Script: {instanceID: 11934}
+      Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12162}
-    - Class: 114
-      Script: {instanceID: 12210}
+      Script: {instanceID: 12172}
     - Class: 114
       Script: {instanceID: 12220}
     - Class: 114
-      Script: {instanceID: 12550}
+      Script: {instanceID: 12230}
     - Class: 114
-      Script: {instanceID: 12848}
+      Script: {instanceID: 12568}
     - Class: 114
-      Script: {instanceID: 12850}
+      Script: {instanceID: 12868}
     - Class: 114
-      Script: {instanceID: 12856}
+      Script: {instanceID: 12870}
     - Class: 114
-      Script: {instanceID: 12956}
+      Script: {instanceID: 12876}
     - Class: 114
-      Script: {instanceID: 13734}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 14552}
+      Script: {instanceID: 13348}
     - Class: 114
-      Script: {instanceID: 15036}
+      Script: {instanceID: 13760}
     - Class: 114
-      Script: {instanceID: 15188}
+      Script: {instanceID: 14580}
+    - Class: 114
+      Script: {instanceID: 15070}
+    - Class: 114
+      Script: {instanceID: 15222}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -133,37 +136,39 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11810}
+      Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11848}
+      Script: {instanceID: 11856}
     - Class: 114
-      Script: {instanceID: 11934}
+      Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12162}
-    - Class: 114
-      Script: {instanceID: 12210}
+      Script: {instanceID: 12172}
     - Class: 114
       Script: {instanceID: 12220}
     - Class: 114
-      Script: {instanceID: 12550}
+      Script: {instanceID: 12230}
     - Class: 114
-      Script: {instanceID: 12848}
+      Script: {instanceID: 12568}
     - Class: 114
-      Script: {instanceID: 12850}
+      Script: {instanceID: 12868}
     - Class: 114
-      Script: {instanceID: 12856}
+      Script: {instanceID: 12870}
     - Class: 114
-      Script: {instanceID: 12956}
+      Script: {instanceID: 12876}
     - Class: 114
-      Script: {instanceID: 13734}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 14552}
+      Script: {instanceID: 13348}
     - Class: 114
-      Script: {instanceID: 14818}
+      Script: {instanceID: 13760}
     - Class: 114
-      Script: {instanceID: 15036}
+      Script: {instanceID: 14580}
     - Class: 114
-      Script: {instanceID: 15188}
+      Script: {instanceID: 14852}
+    - Class: 114
+      Script: {instanceID: 15070}
+    - Class: 114
+      Script: {instanceID: 15222}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -209,6 +214,12 @@ ScriptsOnlyBuild:
     className: AudioPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameLiftClient
+  - hash:
+      serializedVersion: 2
       Hash: 4298152c7490141086c39d1836a5a43a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -219,12 +230,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Colour
-  - hash:
-      serializedVersion: 2
-      Hash: 0be8afeeebbcc0be7e13822503372a0d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ConnectionInfo
   - hash:
       serializedVersion: 2
       Hash: e7a73f5f78ba6445195ec23b74a1ce2d
@@ -353,7 +358,7 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
-      Hash: 8745178c8d1c4ddc9c562ca0573b490c
+      Hash: 4d2fd0078dc5f14eced8164480dfb441
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -491,6 +496,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: 0d85f4fda1e0e70cd92c084d12f05cdc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameCamera
+  - hash:
+      serializedVersion: 2
       Hash: 040dd48e3a027d5424519a5fa2009df4
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -605,10 +616,10 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 2e0293cbe4d864776e82335b3fd0f7d6
+      Hash: 52933d54f0b7e008aa283978ed3b7adb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ClientUI
+    className: UIManager
   - hash:
       serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
@@ -671,7 +682,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: a9d9808116fb06908ae60d7ede624403
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ClientModule
@@ -761,6 +772,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Map002.unity
   - Assets/Scenes/Map001.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Map002.app
+  - Assets/Scenes/Map002.unity
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/GameLift01.app

@@ -1,5 +1,9 @@
 ﻿using MLAPI;
 using MLAPI.Transports.UNET;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,33 +52,14 @@ public class ClientModule : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("On SceneLoad - " + scene.name);
-        ConnectToServer(GetMatchEndpoint(scene.name));
     }
 
     public void MoveToWorld(string worldId)
     {
-        DisconnectToServer();
-        SceneManager.LoadScene(worldId);
-        //ConnectToServer(connectionInfo);
-    }
-
-    public void ConnectToServer()
-    {
-        string activeSceneName = SceneManager.GetActiveScene().name;
-        ConnectionInfo connectionInfo = GetMatchEndpoint(activeSceneName);
-        Debug.Log("Connect To Server. IP=" + connectionInfo.GetAddress() + ", Port=" + connectionInfo.GetPort());
-        NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = connectionInfo.GetAddress();
-        NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort = connectionInfo.GetPort();
-        NetworkingManager.Singleton.StartClient();
+        LoadWorldAsync(worldId);
     }
 
     public void ConnectToServer(ConnectionInfo connectionInfo)
@@ -107,6 +92,7 @@ public class ClientModule : MonoBehaviour
     {
         Debug.Log("Sign In Process");
         PlayerName = inputName;
+
         MoveToWorld("Map001");
     }
 
@@ -115,22 +101,18 @@ public class ClientModule : MonoBehaviour
         return true;
     }
 
-    private ConnectionInfo GetMatchEndpoint(string worldId)
+    private async void LoadWorldAsync(string worldId)
     {
-        //Temp Code
-        string activeSceneName = SceneManager.GetActiveScene().name;
-        ConnectionInfo connectionInfo = new ConnectionInfo();
+        DisconnectToServer();
+        SceneManager.LoadScene(worldId);
+        Task<HttpModule.HttpModel> httpResponseMessage =
+            HttpModule.PostAsyncHttp("https://0sos1lsc4c.execute-api.ap-northeast-2.amazonaws.com/prod/matchrequest", new APIModule.MatchRequestParam(worldId));
 
-        if (worldId == "Map001")
-        {
-            connectionInfo.SetAddress("127.0.0.1");
-            connectionInfo.SetPort(7777);
-        }
-        else if (worldId == "Map002")
-        {
-            connectionInfo.SetAddress("127.0.0.1");
-            connectionInfo.SetPort(8888);
-        }
-        return connectionInfo;
+        HttpModule.HttpModel response = await httpResponseMessage;
+        GameLiftModel.MatchRequest responseJson = JsonUtility.FromJson<GameLiftModel.MatchRequest>(response.body);
+        ConnectionInfo connectionInfo = new ConnectionInfo();
+        connectionInfo.SetAddress(responseJson.address);
+        connectionInfo.SetPort(responseJson.port);
+        ConnectToServer(connectionInfo);
     }
 }

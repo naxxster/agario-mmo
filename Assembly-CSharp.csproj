@@ -56,14 +56,17 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\GameLogic\Colour.cs" />
-     <Compile Include="Assets\Scripts\ConnectionInfo.cs" />
+     <Compile Include="Assets\Scripts\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Module\ServerModule.cs" />
+     <Compile Include="Assets\Scripts\GameLift\GameLiftServer.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Player.cs" />
-     <Compile Include="Assets\Scripts\Module\NetManagerHud.cs" />
+     <Compile Include="Assets\Scripts\Module\HttpModule.cs" />
+     <Compile Include="Assets\Scripts\Module\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\GameLift\GameLiftModel.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Boss.cs" />
      <Compile Include="Assets\Scripts\Module\ClientModule.cs" />
-     <Compile Include="Assets\Scripts\Module\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\Module\APIModule.cs" />
      <None Include="Assets\MLAPI\Lib\MLAPI.xml" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -331,6 +334,33 @@
  </Reference>
  <Reference Include="MLAPI">
  <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/MLAPI/Lib/MLAPI.dll</HintPath>
+ </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.Protobuf">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/Google.Protobuf.dll</HintPath>
+ </Reference>
+ <Reference Include="GameLiftServerSDKNet45">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/GameLiftServerSDKNet45.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Buffers">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="log4net">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/log4net.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Collections.Immutable.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Memory.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>/Applications/Unity/Hub/Editor/2020.1.6f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

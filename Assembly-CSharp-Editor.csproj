@@ -342,6 +342,33 @@
  <Reference Include="MLAPI">
  <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/MLAPI/Lib/MLAPI.dll</HintPath>
  </Reference>
+ <Reference Include="websocket-sharp">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.Protobuf">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/Google.Protobuf.dll</HintPath>
+ </Reference>
+ <Reference Include="GameLiftServerSDKNet45">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/GameLiftServerSDKNet45.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Buffers">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Buffers.dll</HintPath>
+ </Reference>
+ <Reference Include="log4net">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/log4net.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Runtime.CompilerServices.Unsafe">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Collections.Immutable">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Collections.Immutable.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Memory">
+ <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Assets/GameLift/System.Memory.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>/Users/jinspark/Documents/Codes/AgarIO/AgarIO/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>

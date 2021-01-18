@@ -9,6 +9,7 @@ public class ServerModule : NetworkedBehaviour
 {
     public static ServerModule Singleton { get; protected set; }
     public GameObject FoodPrefab;
+    private GameLiftServer GameLift;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class ServerModule : NetworkedBehaviour
         }
         DontDestroyOnLoad(gameObject);
         Singleton = this;
+        GameLift = new GameLiftServer();
     }
 
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class ServerModule : NetworkedBehaviour
     {
         NetworkingManager.Singleton.OnServerStarted += OnServerStarted;
         NetworkingManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkingManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
 
 #if UNITY_EDITOR
 
@@ -36,26 +39,29 @@ public class ServerModule : NetworkedBehaviour
             if (activeSceneName == "Map001")
             {
                 //Connect to server from Client
-                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "0.0.0.0";
                 NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 7777;
 
-                if (Application.isBatchMode)
+                const int port = 7777;
+                Debug.Log("Server Module Start at Port :7777 ");
+                // Only run on Server mode
+                if (GameLift.GameLiftStart(port))
                 {
-                    Debug.Log("Server Module Start at Port :7777 ");
-                    // Only run on Server mode
                     NetworkingManager.Singleton.StartServer();
                 }
             }
             else if (activeSceneName == "Map002")
             {
                 //Connect to server from Client
-                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "127.0.0.1";
+                NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = "0.0.0.0";
                 NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 8888;
 
-                if (Application.isBatchMode)
+                const int port = 8888;
+                Debug.Log("Server Module Start at Port :8888 ");
+                // Only run on Server mode
+                //NetworkingManager.Singleton.StartServer();
+                if (GameLift.GameLiftStart(port))
                 {
-                    Debug.Log("Server Module Start at Port :8888 ");
-                    // Only run on Server mode
                     NetworkingManager.Singleton.StartServer();
                 }
             }
@@ -73,15 +79,34 @@ public class ServerModule : NetworkedBehaviour
         //This runs at Server side
         Debug.Log("On Server Started");
 #if UNITY_EDITOR
-        //SpawnPlayer();
 #endif
         StartCoroutine(SpawnFood());
     }
 
     private void OnClientConnected(ulong clientId)
     {
-        //This runs at Client Side
+        //Called when Client connected
         Debug.Log("On Client Connected - " + clientId);
+#if UNITY_EDITOR
+
+#else
+        string playerSessionId = "" + clientId;
+        if (!GameLift.AcceptPlayer(playerSessionId))
+        {
+            Debug.Log("Disconnect Client from server - clientId : " + clientId);
+            NetworkingManager.Singleton.DisconnectClient(clientId);
+        }
+#endif
+    }
+
+    private void OnClientDisconnect(ulong clientId)
+    {
+        //Called when Client disconnected
+        string playerSessionId = "" + clientId;
+#if UNITY_EDITOR
+#else
+        GameLift.RemovePlayer(playerSessionId);
+#endif
     }
 
     private IEnumerator SpawnFood()
@@ -111,5 +136,16 @@ public class ServerModule : NetworkedBehaviour
                 yield return new WaitForSeconds(10.0f);
             }
         }
+    }
+
+    public void OnApplicationQuit()
+    {
+#if UNITY_EDITOR
+#else
+        if (Application.isBatchMode)
+        {
+            GameLift.EndProcess();
+        }
+#endif
     }
 }
