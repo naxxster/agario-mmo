@@ -1,8 +1,9 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public static class HttpModule
+public class HttpModule
 {
     public struct HttpModel
     {
@@ -10,18 +11,25 @@ public static class HttpModule
         public string body;
     }
 
-    private static readonly HttpClient httpClient = new HttpClient();
-
-    public static async Task<HttpModel> PostAsyncHttp(string url, object param)
+    public static IEnumerator PutRequest(string url, object body, Action<string> callback)
     {
-        var jsonParam = JsonUtility.ToJson(param);
-        Debug.Log("Json Param : " + jsonParam);
-        var stringContent = new StringContent(jsonParam, System.Text.Encoding.UTF8, "application/json");
+        var json = JsonUtility.ToJson(body);
+        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(json);
 
-        using (var response = await httpClient.PostAsync(url, stringContent).ConfigureAwait(false))
+        using (UnityWebRequest webRequest = UnityWebRequest.Put(url, bytes))
         {
-            string json = await response.Content.ReadAsStringAsync();
-            return JsonUtility.FromJson<HttpModel>(json);
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                Debug.Log(webRequest.result);
+                Debug.Log(webRequest.downloadHandler.text);
+                callback(webRequest.downloadHandler.text);
+            }
         }
     }
 }

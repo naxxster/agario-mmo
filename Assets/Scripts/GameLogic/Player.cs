@@ -37,7 +37,7 @@ public class Player : NetworkedBehaviour
 
     private void OnGUI()
     {
-        string text = "<b><i>" + ClientModule.Singleton.PlayerName + "(" + Score + ")</i></b>";
+        string text = "<b><i>" + ClientModule.Singleton.PlayerId + "(" + Score + ")</i></b>";
         var guiPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         var textSiz = GUI.skin.label.CalcSize(new GUIContent(text));
         var rect = new Rect(0, 0, textSiz.x, textSiz.y);
@@ -49,14 +49,15 @@ public class Player : NetworkedBehaviour
 
     private void ServerInit()
     {
-        float z = transform.position.z;
-        float x = Random.Range
-            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
-        float y = Random.Range
-            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
-        Vector3 randomPos = new Vector3(x, y, z);
-        Debug.Log("Spawn pos : " + randomPos);
-        transform.position = randomPos;
+        // Initialize Spawned Position
+        //float z = transform.position.z;
+        //float x = Random.Range
+        //    (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
+        //float y = Random.Range
+        //    (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
+        //Vector3 randomPos = new Vector3(x, y, z);
+        //Debug.Log("Spawn pos : " + randomPos);
+        //transform.position = randomPos;
     }
 
     void OnTriggerEnter(Collider other)
@@ -89,6 +90,12 @@ public class Player : NetworkedBehaviour
             }
         }
     }
+
+    //[ServerRPC(RequireOwnership = true)]
+    //private void ActivatePlayerSessionRpc()
+    //{
+    //    ServerModule.Singl
+    //}
 
     [ServerRPC(RequireOwnership = true)]
     private void DoEatServerRpc(GameObject target)

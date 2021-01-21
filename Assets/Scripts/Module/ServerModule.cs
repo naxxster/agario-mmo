@@ -26,9 +26,11 @@ public class ServerModule : NetworkedBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NetworkingManager.Singleton.NetworkConfig.ConnectionApproval = true;
         NetworkingManager.Singleton.OnServerStarted += OnServerStarted;
         NetworkingManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         NetworkingManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+        NetworkingManager.Singleton.ConnectionApprovalCallback += OnConnectionApproved;
 
 #if UNITY_EDITOR
 
@@ -44,6 +46,7 @@ public class ServerModule : NetworkedBehaviour
 
                 const int port = 7777;
                 Debug.Log("Server Module Start at Port :7777 ");
+
                 // Only run on Server mode
                 if (GameLift.GameLiftStart(port))
                 {
@@ -58,8 +61,8 @@ public class ServerModule : NetworkedBehaviour
 
                 const int port = 8888;
                 Debug.Log("Server Module Start at Port :8888 ");
+
                 // Only run on Server mode
-                //NetworkingManager.Singleton.StartServer();
                 if (GameLift.GameLiftStart(port))
                 {
                     NetworkingManager.Singleton.StartServer();
@@ -87,16 +90,6 @@ public class ServerModule : NetworkedBehaviour
     {
         //Called when Client connected
         Debug.Log("On Client Connected - " + clientId);
-#if UNITY_EDITOR
-
-#else
-        string playerSessionId = "" + clientId;
-        if (!GameLift.AcceptPlayer(playerSessionId))
-        {
-            Debug.Log("Disconnect Client from server - clientId : " + clientId);
-            NetworkingManager.Singleton.DisconnectClient(clientId);
-        }
-#endif
     }
 
     private void OnClientDisconnect(ulong clientId)
@@ -107,6 +100,40 @@ public class ServerModule : NetworkedBehaviour
 #else
         GameLift.RemovePlayer(playerSessionId);
 #endif
+    }
+
+    private void OnConnectionApproved(byte[] connectionData, ulong clientId, MLAPI.NetworkingManager.ConnectionApprovedDelegate callback)
+    {
+        Debug.Log("On Connection Approved");
+
+        string connectionString = System.Text.Encoding.UTF8.GetString(connectionData);
+        Debug.Log("Connection String - " + connectionString);
+
+        string playerSessionId = connectionString;
+        bool approve = !System.String.IsNullOrEmpty(connectionString);   //If approve is true, the connection will be added. If it is false, the client gets disconnected
+
+        if (!GameLift.AcceptPlayer(playerSessionId))
+        {
+            Debug.Log("Disconnect Client from server - clientId : " + clientId + ", playerSessionId : " + playerSessionId);
+            //NetworkingManager.Singleton.DisconnectClient(clientId);
+            approve = false;
+        } else
+        {
+            approve = true;
+        }
+        bool createPlayerObject = approve;
+
+        float z = 0;
+        float x = Random.Range
+            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
+        float y = Random.Range
+            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
+        Vector3 randomPos = new Vector3(x, y, z);
+
+        Vector3 spawnPosition = randomPos;
+        Debug.Log("Spawn Position from Server - " + spawnPosition);
+
+        callback(createPlayerObject, null, approve, spawnPosition, null);
     }
 
     private IEnumerator SpawnFood()
