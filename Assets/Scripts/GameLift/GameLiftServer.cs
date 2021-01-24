@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using Aws.GameLift.Server;
 
 public class GameLiftServer
@@ -7,7 +6,8 @@ public class GameLiftServer
 
     public bool GameLiftStart(int listenPort)
     {
-        Debug.Log("GameLift Start with Port:" + listenPort);
+        //Debug.Log("GameLift Start with Port:" + listenPort);
+        LogModule.WriteToLogFile("[GameLift] GameLift Start with Port:" + listenPort);
         var initSDKOutcome = GameLiftServerAPI.InitSDK();
         if (initSDKOutcome.Success)
         {
@@ -30,24 +30,28 @@ public class GameLiftServer
                 listenPort,
                 new LogParameters(new List<string>()
                 {
-                    "./local/game/logs/myserver.log"
+                    //"./local/game/logs/myserver.log"
+                    "C:\\game\\myserver.log"
                 }
                 ));
             var processReadyOutcome = GameLiftServerAPI.ProcessReady(processParameters);
             if (processReadyOutcome.Success)
             {
-                Debug.Log("ProcessReady Success");
+                //Debug.Log("ProcessReady Success");
+                LogModule.WriteToLogFile("[GameLift] ProcessReady Success");
                 return true;
             }
             else
             {
-                Debug.Log("ProcessReady Failure : " + processReadyOutcome.Error.ToString());
+                //Debug.Log("ProcessReady Failure : " + processReadyOutcome.Error.ToString());
+                LogModule.WriteToLogFile("[GameLift] ProcessReady Failure : " + processReadyOutcome.Error.ToString());
                 return false;
             }
         }
         else
         {
-            Debug.Log("InitSDK failure : " + initSDKOutcome.Error.ToString());
+            //Debug.Log("InitSDK failure : " + initSDKOutcome.Error.ToString());
+            LogModule.WriteToLogFile("[GameLift] InitSDK failure : " + initSDKOutcome.Error.ToString());
             return false;
         }
     }
@@ -57,12 +61,14 @@ public class GameLiftServer
         var acceptPlayerSessionOutcome = GameLiftServerAPI.AcceptPlayerSession(playerSessionId);
         if (acceptPlayerSessionOutcome.Success)
         {
-            Debug.Log("Player Session Validated.");
+            //Debug.Log("Player Session Validated.");
+            LogModule.WriteToLogFile("[GameLift] Player Session Validated");
             return true;
         }
         else
         {
-            Debug.Log("Player Session Rejected. AcceptPlayerSession Result : " + acceptPlayerSessionOutcome.Error.ToString());
+            LogModule.WriteToLogFile("[GameLift] Player Session Rejected. AcceptPlayerSession Result : " + acceptPlayerSessionOutcome.Error.ToString());
+            //Debug.Log("Player Session Rejected. AcceptPlayerSession Result : " + acceptPlayerSessionOutcome.Error.ToString());
             return false;
         }
     }
@@ -72,11 +78,13 @@ public class GameLiftServer
         var removePlayerSessionOutcome = GameLiftServerAPI.RemovePlayerSession(playerSessionId);
         if (removePlayerSessionOutcome.Success)
         {
-            Debug.Log("Remove Player Session Success : " + playerSessionId);
+            LogModule.WriteToLogFile("[GameLift] Remove Player Session Success : " + playerSessionId);
+            //Debug.Log("Remove Player Session Success : " + playerSessionId);
         }
         else
         {
-            Debug.Log("Remove Player Session Failed. Result : " + removePlayerSessionOutcome.Error.ToString());
+            //Debug.Log("Remove Player Session Failed. Result : " + removePlayerSessionOutcome.Error.ToString());
+            LogModule.WriteToLogFile("[GameLift] Remove Player Session Failed. Result : " + removePlayerSessionOutcome.Error.ToString());
         }
     }
 
@@ -85,11 +93,13 @@ public class GameLiftServer
         var processEndingOutcome = GameLiftServerAPI.ProcessEnding();
         if (processEndingOutcome.Success)
         {
-            Debug.Log("End GameLift Server Process");
+            LogModule.WriteToLogFile("[GameLift] End GameLift Server Process");
+            //Debug.Log("End GameLift Server Process");
         }
         else
         {
-            Debug.Log("Process Ending Failed. Result : " + processEndingOutcome.Error.ToString());
+            LogModule.WriteToLogFile("[GameLift] Process Ending Failed. Result : " + processEndingOutcome.Error.ToString());
+            //Debug.Log("Process Ending Failed. Result : " + processEndingOutcome.Error.ToString());
         }
     }
 }

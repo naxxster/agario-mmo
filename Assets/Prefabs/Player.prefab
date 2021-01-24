@@ -77,13 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b24ac53f650940128e82a2400599dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SendsPerSecond: 20
-  MinimumMovement: 0.01
-  MinimumRotation: 1
   Food: Food
   Enemy: Player
+  Boss: Boss
   Increase: 0.1
-  Letters: {fileID: 0}
   Channel: MLAPI_DEFAULT_MESSAGE
 --- !u!114 &4993037723832545627
 MonoBehaviour:
@@ -250,4 +247,3 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6e0e8080131242c4685962553d175517, type: 2}
   - {fileID: 2100000, guid: c3897e13811f29c4998a358ba269ea99, type: 2}
   - {fileID: 2100000, guid: 78571981f5da54439b0d62ee0935d7a2, type: 2}
-  - {fileID: 2100000, guid: 18dd06420e2cc49bdad475e06ef69ab3, type: 2}

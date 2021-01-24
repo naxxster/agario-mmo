@@ -32,6 +32,8 @@ public class ClientModule : MonoBehaviour
 
     public ConnectionInfo ClientConnection = new ConnectionInfo();
 
+    public bool LocalTest = true;
+
     void Awake()
     {
         if (Singleton != null)
@@ -51,7 +53,12 @@ public class ClientModule : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("On SceneLoad - " + scene.name);
+        LogModule.WriteToLogFile("[ClientModule] On SceneLoad - " + scene.name);
+        if (scene.name != "Login")
+        {
+            // If scene is about game, connect to game server
+            ConnectToServer();
+        }
     }
 
 
@@ -91,18 +98,17 @@ public class ClientModule : MonoBehaviour
         string inputName = NameInputField.text;
         string inputPassword = PasswordInputField.text;
 
-        Debug.Log("Onclick - " + ClientModule.Singleton);
+        LogModule.WriteToLogFile("[ClientModule] Onclick - " + ClientModule.Singleton);
         ConnectionStatus.text = "Entering the world";
 
         if (ClientModule.Singleton.SignIn(inputName, inputPassword))
         {
             // Login existing server
-            //SetNetworkHUD(UIType.PLAY);
             ClientModule.Singleton.SignInProcess(inputName);
         }
         else
         {
-            Debug.Log("Sign In Failed. inputName-" + inputName + ", inputPassword-" + inputPassword);
+            LogModule.WriteToLogFile("[ClientModule] Sign In Failed. inputName-" + inputName + ", inputPassword-" + inputPassword);
         }
     }
 
@@ -113,11 +119,11 @@ public class ClientModule : MonoBehaviour
 
         if (ClientModule.Singleton.SignUp(inputName, inputPassword))
         {
-            Debug.Log("Sign Up Succeeded!");
+            LogModule.WriteToLogFile("[ClientModule] Sign Up Succeeded!");
         }
         else
         {
-            Debug.Log("Sign Up Failed. inputName-" + inputName + ", inputPassword-" + inputPassword);
+            LogModule.WriteToLogFile("[ClientModule] Sign Up Failed. inputName-" + inputName + ", inputPassword-" + inputPassword);
         }
     }
     #endregion
@@ -132,19 +138,35 @@ public class ClientModule : MonoBehaviour
 
     public void SignInProcess(string inputName)
     {
-        Debug.Log("Sign In Process");
+        LogModule.WriteToLogFile("[ClientModule] Sign In Process");
         PlayerId = inputName;
 
+#if UNITY_EDITOR
+        if (LocalTest)
+        {
+            SetMainUI(UIType.PLAY);
+            this.ClientConnection.Addess = "127.0.0.1";
+            this.ClientConnection.Port = 7777;
+            this.ClientConnection.PlayerSessionId = "Player!";
+            DisconnectToServer();
+            SceneManager.LoadScene(this.ClientConnection.WorldId);
+        }
+        else
+        {
+            MoveToWorld("Map001");
+        }
+#else
         MoveToWorld("Map001");
+#endif
     }
 
     public bool SignUp(string inputName, string inputPassword)
     {
         return true;
     }
-    #endregion
+#endregion
 
-    #region ClientNetwork
+#region ClientNetwork
     public void MoveToWorld(string worldId)
     {
         ConnectionStatus.text = "Searching World . . .";
@@ -153,11 +175,7 @@ public class ClientModule : MonoBehaviour
 
     public void ConnectToServer()
     {
-        // NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress : Connection Host Address
-        // NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort : Port that Client Connect
-        // NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort : Port that Server Listen
-
-        Debug.Log("Connect To Server. IP=" + ClientConnection.Addess + ", Port=" + ClientConnection.Port);
+        LogModule.WriteToLogFile("[ClientModule] Connect To Server. IP=" + ClientConnection.Addess + ", Port=" + ClientConnection.Port);
         NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectAddress = ClientConnection.Addess;
         NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort = ClientConnection.Port;
         NetworkingManager.Singleton.NetworkConfig.ConnectionApproval = true;
@@ -169,14 +187,14 @@ public class ClientModule : MonoBehaviour
     {
         if (NetworkingManager.Singleton.IsConnectedClient)
         {
-            Debug.Log("Disconnect CLient");
+            LogModule.WriteToLogFile("[ClientModule] Disconnect CLient");
             NetworkingManager.Singleton.StopClient();
         }
     }
 
     private void MatchRequestCallback(string matchmakingResponse)
     {
-        Debug.Log("Match Request Callback - " + matchmakingResponse);
+        LogModule.WriteToLogFile("[ClientModule] Match Request Callback - " + matchmakingResponse);
         APIModule.MatchmakingResponse matchmakingResult = JsonUtility.FromJson<APIModule.MatchmakingResponse>(matchmakingResponse);
         this.ClientConnection.TicketId = matchmakingResult.ticketId;
 
@@ -185,25 +203,32 @@ public class ClientModule : MonoBehaviour
 
     IEnumerator MatchStatusPolling()
     {
-        Debug.Log("Send Polling with TicketId - " + this.ClientConnection.TicketId);
-        yield return new WaitForSeconds(1.0f);
+        LogModule.WriteToLogFile("[ClientModule] Send Polling with TicketId - " + this.ClientConnection.TicketId);
+        yield return new WaitForSeconds(2.0f);
         StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHSTATUS, new APIModule.MatchstatusRequest(this.ClientConnection.TicketId), MatchStatusCallback));
     }
 
     private void MatchStatusCallback(string matchstatusResponse)
     {
-        Debug.Log("MatchStatus Callback : " + matchstatusResponse);
+        LogModule.WriteToLogFile("[ClientModule] MatchStatus Callback : " + matchstatusResponse);
         APIModule.MatchstatusResponse matchstatusResult = JsonUtility.FromJson<APIModule.MatchstatusResponse>(matchstatusResponse);
+
+#if UNITY_EDITOR
+
+#else
         if (matchstatusResult.port > 0)
         {
             this.ClientConnection.MatchSuccess = true;
+            this.ClientConnection.Addess = matchstatusResult.address;
+            this.ClientConnection.Port = matchstatusResult.port;
+            this.ClientConnection.PlayerSessionId = matchstatusResult.playerSessionId;
         }
         if (this.ClientConnection.MatchSuccess)
         {
             SetMainUI(UIType.PLAY);
             DisconnectToServer();
             SceneManager.LoadScene(this.ClientConnection.WorldId);
-            ConnectToServer();
+            //ConnectToServer();
         }
         else
         {
@@ -214,10 +239,11 @@ public class ClientModule : MonoBehaviour
             }
             else
             {
-                Debug.Log("Connection Error. Start later");
+                LogModule.WriteToLogFile("[ClientModule] Connection Error. Start later");
                 ConnectionStatus.text = "Connection Error";
             }
         }
+#endif
     }
-    #endregion
+#endregion
 }

@@ -33,8 +33,82 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Text
   sceneClasses:
+    Assets/Scenes/Login.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11828}
+    - Class: 114
+      Script: {instanceID: 11856}
+    - Class: 114
+      Script: {instanceID: 11942}
+    - Class: 114
+      Script: {instanceID: 12168}
+    - Class: 114
+      Script: {instanceID: 12226}
+    - Class: 114
+      Script: {instanceID: 12564}
+    - Class: 114
+      Script: {instanceID: 12866}
+    - Class: 114
+      Script: {instanceID: 12868}
+    - Class: 114
+      Script: {instanceID: 12874}
+    - Class: 114
+      Script: {instanceID: 12976}
+    - Class: 114
+      Script: {instanceID: 13760}
+    - Class: 114
+      Script: {instanceID: 14076}
+    - Class: 114
+      Script: {instanceID: 14578}
+    - Class: 114
+      Script: {instanceID: 15068}
+    - Class: 114
+      Script: {instanceID: 15220}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Map001.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -63,48 +137,36 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11862}
+      Script: {instanceID: 11856}
     - Class: 114
-      Script: {instanceID: 11948}
+      Script: {instanceID: 11942}
     - Class: 114
-      Script: {instanceID: 12176}
+      Script: {instanceID: 12216}
     - Class: 114
-      Script: {instanceID: 12224}
+      Script: {instanceID: 12564}
     - Class: 114
-      Script: {instanceID: 12234}
+      Script: {instanceID: 12866}
     - Class: 114
-      Script: {instanceID: 12572}
-    - Class: 114
-      Script: {instanceID: 12872}
+      Script: {instanceID: 12868}
     - Class: 114
       Script: {instanceID: 12874}
     - Class: 114
-      Script: {instanceID: 12880}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 12982}
+      Script: {instanceID: 13348}
     - Class: 114
-      Script: {instanceID: 13354}
+      Script: {instanceID: 14578}
     - Class: 114
-      Script: {instanceID: 13764}
+      Script: {instanceID: 15068}
     - Class: 114
-      Script: {instanceID: 14584}
-    - Class: 114
-      Script: {instanceID: 15074}
-    - Class: 114
-      Script: {instanceID: 15226}
+      Script: {instanceID: 15220}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -138,50 +200,38 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11862}
+      Script: {instanceID: 11856}
     - Class: 114
-      Script: {instanceID: 11948}
+      Script: {instanceID: 11942}
     - Class: 114
-      Script: {instanceID: 12176}
+      Script: {instanceID: 12216}
     - Class: 114
-      Script: {instanceID: 12224}
+      Script: {instanceID: 12564}
     - Class: 114
-      Script: {instanceID: 12234}
+      Script: {instanceID: 12866}
     - Class: 114
-      Script: {instanceID: 12572}
-    - Class: 114
-      Script: {instanceID: 12872}
+      Script: {instanceID: 12868}
     - Class: 114
       Script: {instanceID: 12874}
     - Class: 114
-      Script: {instanceID: 12880}
+      Script: {instanceID: 12976}
     - Class: 114
-      Script: {instanceID: 12982}
+      Script: {instanceID: 13348}
     - Class: 114
-      Script: {instanceID: 13354}
+      Script: {instanceID: 14578}
     - Class: 114
-      Script: {instanceID: 13764}
+      Script: {instanceID: 14850}
     - Class: 114
-      Script: {instanceID: 14584}
+      Script: {instanceID: 15068}
     - Class: 114
-      Script: {instanceID: 14856}
-    - Class: 114
-      Script: {instanceID: 15074}
-    - Class: 114
-      Script: {instanceID: 15226}
+      Script: {instanceID: 15220}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -604,12 +654,6 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 48a481f152751ccbb66faf703521730e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: UIManager
-  - hash:
-      serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -670,7 +714,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 12f4491e46d4f2993a172878864c9f34
+      Hash: 11f2f23248b22f7ccbe4b4b3d75bddcd
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ClientModule
@@ -760,6 +804,7 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
+  - Assets/Scenes/Login.unity
   - Assets/Scenes/Map001.unity
   - Assets/Scenes/Map002.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/GameLift001.app
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Client.app

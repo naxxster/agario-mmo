@@ -4,12 +4,15 @@ using MLAPI.Transports.UNET;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ServerModule : NetworkedBehaviour
 {
     public static ServerModule Singleton { get; protected set; }
     public GameObject FoodPrefab;
     private GameLiftServer GameLift;
+
+    private Dictionary<string, string> PlayerSessionMap = new Dictionary<string, string>();
 
     private void Awake()
     {
@@ -45,7 +48,7 @@ public class ServerModule : NetworkedBehaviour
                 NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 7777;
 
                 const int port = 7777;
-                Debug.Log("Server Module Start at Port :7777 ");
+                LogModule.WriteToLogFile("[ServerModule] Server Module Start at Port :7777 ");
 
                 // Only run on Server mode
                 if (GameLift.GameLiftStart(port))
@@ -60,7 +63,7 @@ public class ServerModule : NetworkedBehaviour
                 NetworkingManager.Singleton.GetComponent<UnetTransport>().ServerListenPort = 8888;
 
                 const int port = 8888;
-                Debug.Log("Server Module Start at Port :8888 ");
+                LogModule.WriteToLogFile("[ServerModule] Server Module Start at Port :8888 ");
 
                 // Only run on Server mode
                 if (GameLift.GameLiftStart(port))
@@ -80,7 +83,7 @@ public class ServerModule : NetworkedBehaviour
     private void OnServerStarted()
     {
         //This runs at Server side
-        Debug.Log("On Server Started");
+        LogModule.WriteToLogFile("[ServerModule] On Server Started");
 #if UNITY_EDITOR
 #endif
         StartCoroutine(SpawnFood());
@@ -89,35 +92,41 @@ public class ServerModule : NetworkedBehaviour
     private void OnClientConnected(ulong clientId)
     {
         //Called when Client connected
-        Debug.Log("On Client Connected - " + clientId);
+        LogModule.WriteToLogFile("[ServerModule] On Client Connected - " + clientId);
     }
 
     private void OnClientDisconnect(ulong clientId)
     {
         //Called when Client disconnected
-        string playerSessionId = "" + clientId;
+        if (PlayerSessionMap.ContainsKey("" + clientId))
+        {
+            string playerSessionId = PlayerSessionMap["" + clientId];
+            PlayerSessionMap.Remove("" + clientId);
 #if UNITY_EDITOR
 #else
-        GameLift.RemovePlayer(playerSessionId);
+            GameLift.RemovePlayer(playerSessionId);
 #endif
+        }
     }
 
     private void OnConnectionApproved(byte[] connectionData, ulong clientId, MLAPI.NetworkingManager.ConnectionApprovedDelegate callback)
     {
-        Debug.Log("On Connection Approved");
+        LogModule.WriteToLogFile("[ServerModule] On Connection Approved");
 
         string connectionString = System.Text.Encoding.UTF8.GetString(connectionData);
-        Debug.Log("Connection String - " + connectionString);
+        LogModule.WriteToLogFile("[ServerModule] Connection String - " + connectionString);
 
         string playerSessionId = connectionString;
-        bool approve = !System.String.IsNullOrEmpty(connectionString);   //If approve is true, the connection will be added. If it is false, the client gets disconnected
 
-        if (!GameLift.AcceptPlayer(playerSessionId))
+        //If approve is true, the connection will be added. If it is false, the client gets disconnected
+        bool approve = !string.IsNullOrEmpty(connectionString);
+
+        if (!approve || !GameLift.AcceptPlayer(playerSessionId))
         {
-            Debug.Log("Disconnect Client from server - clientId : " + clientId + ", playerSessionId : " + playerSessionId);
-            //NetworkingManager.Singleton.DisconnectClient(clientId);
+            LogModule.WriteToLogFile("[ServerModule] Disconnect Client from server - clientId : " + clientId + ", playerSessionId : " + playerSessionId);
             approve = false;
-        } else
+        }
+        else
         {
             approve = true;
         }
@@ -131,7 +140,11 @@ public class ServerModule : NetworkedBehaviour
         Vector3 randomPos = new Vector3(x, y, z);
 
         Vector3 spawnPosition = randomPos;
-        Debug.Log("Spawn Position from Server - " + spawnPosition);
+        if (approve)
+        {
+            LogModule.WriteToLogFile("[ServerModule] Spawn Position from Server - " + spawnPosition);
+            PlayerSessionMap["" + clientId] = playerSessionId;
+        }
 
         callback(createPlayerObject, null, approve, spawnPosition, null);
     }

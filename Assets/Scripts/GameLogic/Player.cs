@@ -22,8 +22,6 @@ public class Player : NetworkedBehaviour
     {
         // This is called when the object is spawned. Once this gets invoked. The object is ready for RPC and var changes.
         ServerInit();
-
-        // TODO : 원격지로부터 데이터를 로드해서 기본 객체를 만드는데 사용할 
     }
 
     private void Update()
@@ -37,31 +35,23 @@ public class Player : NetworkedBehaviour
 
     private void OnGUI()
     {
-        string text = "<b><i>" + ClientModule.Singleton.PlayerId + "(" + Score + ")</i></b>";
+        string text = "<b><i>Player " + NetworkId + "(" + Score + ")</i></b>";
         var guiPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         var textSiz = GUI.skin.label.CalcSize(new GUIContent(text));
         var rect = new Rect(0, 0, textSiz.x, textSiz.y);
         rect.x = guiPos.x - rect.width/2;
         rect.y = Screen.height - guiPos.y - rect.height/2;
-        GUI.contentColor = Color.cyan;
+        GUI.contentColor = Color.black;
         GUI.Label(rect, text);
     }
 
     private void ServerInit()
     {
-        // Initialize Spawned Position
-        //float z = transform.position.z;
-        //float x = Random.Range
-        //    (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
-        //float y = Random.Range
-        //    (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
-        //Vector3 randomPos = new Vector3(x, y, z);
-        //Debug.Log("Spawn pos : " + randomPos);
-        //transform.position = randomPos;
     }
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Collider Other - " + other);
         InvokeServerRpc(DoEatServerRpc, other.gameObject);
     }
 
@@ -78,7 +68,7 @@ public class Player : NetworkedBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space Enter");
+            LogModule.WriteToLogFile("Space Enter");
             string activeSceneName = SceneManager.GetActiveScene().name;
             if (activeSceneName == "Map001")
             {
@@ -90,12 +80,6 @@ public class Player : NetworkedBehaviour
             }
         }
     }
-
-    //[ServerRPC(RequireOwnership = true)]
-    //private void ActivatePlayerSessionRpc()
-    //{
-    //    ServerModule.Singl
-    //}
 
     [ServerRPC(RequireOwnership = true)]
     private void DoEatServerRpc(GameObject target)

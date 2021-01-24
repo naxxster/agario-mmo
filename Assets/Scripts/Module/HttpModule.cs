@@ -22,12 +22,11 @@ public class HttpModule
 
             if (webRequest.isNetworkError)
             {
-                Debug.Log(webRequest.error);
+                LogModule.WriteToLogFile("[HttpModule] " + webRequest.error);
             }
             else
             {
-                Debug.Log(webRequest.result);
-                Debug.Log(webRequest.downloadHandler.text);
+                LogModule.WriteToLogFile("[HttpModule] " + webRequest.downloadHandler.text);
                 callback(webRequest.downloadHandler.text);
             }
         }
