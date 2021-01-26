@@ -1138,7 +1138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerId: 
-  LocalTest: 1
+  LocalTest: 0
   NameInputField: {fileID: 737942237}
   PasswordInputField: {fileID: 909899143}
   SignInBtn: {fileID: 1562486450}

@@ -77,20 +77,50 @@ public class ClientModule : MonoBehaviour
         if (uIType == UIType.NORMAL)
         {
             //Init
-            NameInputField.gameObject.SetActive(true);
-            PasswordInputField.gameObject.SetActive(true);
-            SignInBtn.gameObject.SetActive(true);
-            SignUpBtn.gameObject.SetActive(true);
-            ConnectionStatus.gameObject.SetActive(true);
+            if (NameInputField != null)
+            {
+                NameInputField.gameObject.SetActive(true);
+            }
+            if (PasswordInputField != null)
+            {
+                PasswordInputField.gameObject.SetActive(true);
+            }
+            if (SignInBtn != null)
+            {
+                SignInBtn.gameObject.SetActive(true);
+            }
+            if (SignUpBtn != null)
+            {
+                SignUpBtn.gameObject.SetActive(true);
+            }
+            if (ConnectionStatus != null)
+            {
+                ConnectionStatus.gameObject.SetActive(true);
+            }
         }
         else if (uIType == UIType.PLAY)
         {
             //Hosting
-            NameInputField.gameObject.SetActive(false);
-            PasswordInputField.gameObject.SetActive(false);
-            SignInBtn.gameObject.SetActive(false);
-            SignUpBtn.gameObject.SetActive(false);
-            ConnectionStatus.gameObject.SetActive(false);
+            if (NameInputField != null)
+            {
+                NameInputField.gameObject.SetActive(false);
+            }
+            if (PasswordInputField != null)
+            {
+                PasswordInputField.gameObject.SetActive(false);
+            }
+            if (SignInBtn != null)
+            {
+                SignInBtn.gameObject.SetActive(false);
+            }
+            if (SignUpBtn != null)
+            {
+                SignUpBtn.gameObject.SetActive(false);
+            }
+            if (ConnectionStatus != null)
+            {
+                ConnectionStatus.gameObject.SetActive(false);
+            }
         }
     }
     public void OnClickSignInBtn()
@@ -170,6 +200,7 @@ public class ClientModule : MonoBehaviour
     public void MoveToWorld(string worldId)
     {
         ConnectionStatus.text = "Searching World . . .";
+        this.ClientConnection.WorldId = worldId;
         StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHREQUEST, new APIModule.MatchmakingRequest(this.PlayerId, worldId), MatchRequestCallback));
     }
 
@@ -214,6 +245,37 @@ public class ClientModule : MonoBehaviour
         APIModule.MatchstatusResponse matchstatusResult = JsonUtility.FromJson<APIModule.MatchstatusResponse>(matchstatusResponse);
 
 #if UNITY_EDITOR
+
+        if (!LocalTest)
+        {
+            if (matchstatusResult.port > 0)
+            {
+                this.ClientConnection.MatchSuccess = true;
+                this.ClientConnection.Addess = matchstatusResult.address;
+                this.ClientConnection.Port = matchstatusResult.port;
+                this.ClientConnection.PlayerSessionId = matchstatusResult.playerSessionId;
+            }
+            if (this.ClientConnection.MatchSuccess)
+            {
+                SetMainUI(UIType.PLAY);
+                DisconnectToServer();
+                SceneManager.LoadScene(this.ClientConnection.WorldId);
+                //ConnectToServer();
+            }
+            else
+            {
+                if (this.ClientConnection.PollingCount < 120)
+                {
+                    // Send requests around 2minutes
+                    StartCoroutine(MatchStatusPolling());
+                }
+                else
+                {
+                    LogModule.WriteToLogFile("[ClientModule] Connection Error. Start later");
+                    ConnectionStatus.text = "Connection Error";
+                }
+            }
+        }
 
 #else
         if (matchstatusResult.port > 0)

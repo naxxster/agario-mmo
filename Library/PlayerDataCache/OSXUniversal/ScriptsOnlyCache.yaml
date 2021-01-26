@@ -714,7 +714,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 11f2f23248b22f7ccbe4b4b3d75bddcd
+      Hash: 81320b96898db8a876b45f88aa12325e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ClientModule
