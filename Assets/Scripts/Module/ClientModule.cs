@@ -32,7 +32,7 @@ public class ClientModule : MonoBehaviour
 
     public ConnectionInfo ClientConnection = new ConnectionInfo();
 
-    public bool LocalTest = true;
+    public bool LocalTest;
 
     void Awake()
     {
@@ -227,7 +227,8 @@ public class ClientModule : MonoBehaviour
     {
         LogModule.WriteToLogFile("[ClientModule] Match Request Callback - " + matchmakingResponse);
         APIModule.MatchmakingResponse matchmakingResult = JsonUtility.FromJson<APIModule.MatchmakingResponse>(matchmakingResponse);
-        this.ClientConnection.TicketId = matchmakingResult.ticketId;
+        this.ClientConnection.TicketId = "77ffb917-5425-402e-a4b2-b379579863d3";
+        //matchmakingResult.ticketId;
 
         StartCoroutine(MatchStatusPolling());
     }
@@ -235,7 +236,7 @@ public class ClientModule : MonoBehaviour
     IEnumerator MatchStatusPolling()
     {
         LogModule.WriteToLogFile("[ClientModule] Send Polling with TicketId - " + this.ClientConnection.TicketId);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
         StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHSTATUS, new APIModule.MatchstatusRequest(this.ClientConnection.TicketId), MatchStatusCallback));
     }
 

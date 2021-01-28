@@ -84,15 +84,16 @@ public class ServerModule : NetworkedBehaviour
     {
         //This runs at Server side
         LogModule.WriteToLogFile("[ServerModule] On Server Started");
-#if UNITY_EDITOR
-#endif
-        StartCoroutine(SpawnFood());
     }
 
     private void OnClientConnected(ulong clientId)
     {
         //Called when Client connected
-        LogModule.WriteToLogFile("[ServerModule] On Client Connected - " + clientId);
+        if (IsServer)
+        {
+            LogModule.WriteToLogFile("[ServerModule] On Client Connected - " + clientId);
+            StartCoroutine(SpawnFood());
+        }
     }
 
     private void OnClientDisconnect(ulong clientId)
@@ -151,7 +152,7 @@ public class ServerModule : NetworkedBehaviour
 
     private IEnumerator SpawnFood()
     {
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 100; i++)
         {
             int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
             int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
@@ -163,18 +164,7 @@ public class ServerModule : NetworkedBehaviour
             GameObject foodObj = Instantiate(FoodPrefab, pos, Quaternion.identity);
             //Spawn Food Management
             foodObj.GetComponent<NetworkedObject>().Spawn();
-            if (i < 10)
-            {
-                yield return new WaitForSeconds(2.0f);
-            }
-            else if (i < 200)
-            {
-                yield return new WaitForSeconds(5.0f);
-            }
-            else
-            {
-                yield return new WaitForSeconds(10.0f);
-            }
+            yield return new WaitForSeconds(10.0f);
         }
     }
 

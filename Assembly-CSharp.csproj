@@ -62,7 +62,6 @@
      <Compile Include="Assets\Scripts\Module\HttpModule.cs" />
      <Compile Include="Assets\Scripts\Module\APIModule.cs" />
      <Compile Include="Assets\Scripts\Module\GameCamera.cs" />
-     <Compile Include="Assets\Scripts\GameLift\GameLiftModel.cs" />
      <Compile Include="Assets\Scripts\Module\LogModule.cs" />
      <Compile Include="Assets\Scripts\GameLogic\Boss.cs" />
      <Compile Include="Assets\Scripts\Module\ClientModule.cs" />
