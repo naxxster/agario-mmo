@@ -14,6 +14,8 @@ public class ServerModule : NetworkedBehaviour
 
     private Dictionary<string, string> PlayerSessionMap = new Dictionary<string, string>();
 
+    public bool LocalTest = false;
+
     private void Awake()
     {
         if (Singleton != null)
@@ -51,9 +53,16 @@ public class ServerModule : NetworkedBehaviour
                 LogModule.WriteToLogFile("[ServerModule] Server Module Start at Port :7777 ");
 
                 // Only run on Server mode
-                if (GameLift.GameLiftStart(port))
+                if (LocalTest)
                 {
                     NetworkingManager.Singleton.StartServer();
+                }
+                else
+                {
+                    if (GameLift.GameLiftStart(port))
+                    {
+                        NetworkingManager.Singleton.StartServer();
+                    }
                 }
             }
             else if (activeSceneName == "Map002")
@@ -66,9 +75,16 @@ public class ServerModule : NetworkedBehaviour
                 LogModule.WriteToLogFile("[ServerModule] Server Module Start at Port :8888 ");
 
                 // Only run on Server mode
-                if (GameLift.GameLiftStart(port))
+                if (LocalTest)
                 {
                     NetworkingManager.Singleton.StartServer();
+                }
+                else
+                {
+                    if (GameLift.GameLiftStart(port))
+                    {
+                        NetworkingManager.Singleton.StartServer();
+                    }
                 }
             }
         }
@@ -105,7 +121,10 @@ public class ServerModule : NetworkedBehaviour
             PlayerSessionMap.Remove("" + clientId);
 #if UNITY_EDITOR
 #else
-            GameLift.RemovePlayer(playerSessionId);
+            if (!LocalTest)
+            {
+                GameLift.RemovePlayer(playerSessionId);
+            }
 #endif
         }
     }
@@ -122,14 +141,17 @@ public class ServerModule : NetworkedBehaviour
         //If approve is true, the connection will be added. If it is false, the client gets disconnected
         bool approve = !string.IsNullOrEmpty(connectionString);
 
-        if (!approve || !GameLift.AcceptPlayer(playerSessionId))
+        if (!LocalTest)
         {
-            LogModule.WriteToLogFile("[ServerModule] Disconnect Client from server - clientId : " + clientId + ", playerSessionId : " + playerSessionId);
-            approve = false;
-        }
-        else
-        {
-            approve = true;
+            if (!approve || !GameLift.AcceptPlayer(playerSessionId))
+            {
+                LogModule.WriteToLogFile("[ServerModule] Disconnect Client from server - clientId : " + clientId + ", playerSessionId : " + playerSessionId);
+                approve = false;
+            }
+            else
+            {
+                approve = true;
+            }
         }
         bool createPlayerObject = approve;
 
@@ -164,7 +186,7 @@ public class ServerModule : NetworkedBehaviour
             GameObject foodObj = Instantiate(FoodPrefab, pos, Quaternion.identity);
             //Spawn Food Management
             foodObj.GetComponent<NetworkedObject>().Spawn();
-            yield return new WaitForSeconds(10.0f);
+            yield return new WaitForSeconds(5.0f);
         }
     }
 
@@ -172,7 +194,7 @@ public class ServerModule : NetworkedBehaviour
     {
 #if UNITY_EDITOR
 #else
-        if (Application.isBatchMode)
+        if (Application.isBatchMode && !LocalTest)
         {
             GameLift.EndProcess();
         }

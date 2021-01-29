@@ -27,6 +27,17 @@ public class ClientModule : MonoBehaviour
         public string TicketId = "";
         public bool MatchSuccess = false;
         public int PollingCount = 0;
+
+        public void Init()
+        {
+            this.Addess = "127.0.0.1";
+            this.Port = 7777;
+            this.WorldId = "Map001";
+            this.PlayerSessionId = "";
+            this.TicketId = "";
+            this.MatchSuccess = false;
+            this.PollingCount = 0;
+        }
     }
     public string PlayerId = "";
 
@@ -54,11 +65,8 @@ public class ClientModule : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LogModule.WriteToLogFile("[ClientModule] On SceneLoad - " + scene.name);
-        if (scene.name != "Login")
-        {
-            // If scene is about game, connect to game server
-            ConnectToServer();
-        }
+        // If scene is about game, connect to game server
+        ConnectToServer();
     }
 
 
@@ -123,13 +131,17 @@ public class ClientModule : MonoBehaviour
             }
         }
     }
+
     public void OnClickSignInBtn()
     {
         string inputName = NameInputField.text;
         string inputPassword = PasswordInputField.text;
 
         LogModule.WriteToLogFile("[ClientModule] Onclick - " + ClientModule.Singleton);
-        ConnectionStatus.text = "Entering the world";
+        if (ConnectionStatus != null)
+        {
+            ConnectionStatus.text = "Entering the world";
+        }
 
         if (ClientModule.Singleton.SignIn(inputName, inputPassword))
         {
@@ -174,6 +186,7 @@ public class ClientModule : MonoBehaviour
 #if UNITY_EDITOR
         if (LocalTest)
         {
+            Debug.Log("Local Test Sign In");
             SetMainUI(UIType.PLAY);
             this.ClientConnection.Addess = "127.0.0.1";
             this.ClientConnection.Port = 7777;
@@ -199,7 +212,11 @@ public class ClientModule : MonoBehaviour
 #region ClientNetwork
     public void MoveToWorld(string worldId)
     {
-        ConnectionStatus.text = "Searching World . . .";
+        if (ConnectionStatus != null)
+        {
+            ConnectionStatus.text = "Searching World . . .";
+        }
+        this.ClientConnection.Init();
         this.ClientConnection.WorldId = worldId;
         StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHREQUEST, new APIModule.MatchmakingRequest(this.PlayerId, worldId), MatchRequestCallback));
     }
@@ -211,6 +228,7 @@ public class ClientModule : MonoBehaviour
         NetworkingManager.Singleton.GetComponent<UnetTransport>().ConnectPort = ClientConnection.Port;
         NetworkingManager.Singleton.NetworkConfig.ConnectionApproval = true;
         NetworkingManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.UTF8.GetBytes(this.ClientConnection.PlayerSessionId);
+        LogModule.WriteToLogFile("[ClientModule] ConnectionData=" + NetworkingManager.Singleton.NetworkConfig.ConnectionData);
         NetworkingManager.Singleton.StartClient();
     }
 
@@ -227,8 +245,7 @@ public class ClientModule : MonoBehaviour
     {
         LogModule.WriteToLogFile("[ClientModule] Match Request Callback - " + matchmakingResponse);
         APIModule.MatchmakingResponse matchmakingResult = JsonUtility.FromJson<APIModule.MatchmakingResponse>(matchmakingResponse);
-        this.ClientConnection.TicketId = "77ffb917-5425-402e-a4b2-b379579863d3";
-        //matchmakingResult.ticketId;
+        this.ClientConnection.TicketId = matchmakingResult.ticketId;
 
         StartCoroutine(MatchStatusPolling());
     }
@@ -245,8 +262,6 @@ public class ClientModule : MonoBehaviour
         LogModule.WriteToLogFile("[ClientModule] MatchStatus Callback : " + matchstatusResponse);
         APIModule.MatchstatusResponse matchstatusResult = JsonUtility.FromJson<APIModule.MatchstatusResponse>(matchstatusResponse);
 
-#if UNITY_EDITOR
-
         if (!LocalTest)
         {
             if (matchstatusResult.port > 0)
@@ -261,52 +276,24 @@ public class ClientModule : MonoBehaviour
                 SetMainUI(UIType.PLAY);
                 DisconnectToServer();
                 SceneManager.LoadScene(this.ClientConnection.WorldId);
-                //ConnectToServer();
             }
             else
             {
                 if (this.ClientConnection.PollingCount < 120)
                 {
-                    // Send requests around 2minutes
+                    // Send requests about 2minutes
                     StartCoroutine(MatchStatusPolling());
                 }
                 else
                 {
                     LogModule.WriteToLogFile("[ClientModule] Connection Error. Start later");
-                    ConnectionStatus.text = "Connection Error";
+                    if (ConnectionStatus != null)
+                    {
+                        ConnectionStatus.text = "Connection Error";
+                    }
                 }
             }
         }
-
-#else
-        if (matchstatusResult.port > 0)
-        {
-            this.ClientConnection.MatchSuccess = true;
-            this.ClientConnection.Addess = matchstatusResult.address;
-            this.ClientConnection.Port = matchstatusResult.port;
-            this.ClientConnection.PlayerSessionId = matchstatusResult.playerSessionId;
-        }
-        if (this.ClientConnection.MatchSuccess)
-        {
-            SetMainUI(UIType.PLAY);
-            DisconnectToServer();
-            SceneManager.LoadScene(this.ClientConnection.WorldId);
-            //ConnectToServer();
-        }
-        else
-        {
-            if (this.ClientConnection.PollingCount < 120)
-            {
-                // Send requests around 2minutes
-                StartCoroutine(MatchStatusPolling());
-            }
-            else
-            {
-                LogModule.WriteToLogFile("[ClientModule] Connection Error. Start later");
-                ConnectionStatus.text = "Connection Error";
-            }
-        }
-#endif
     }
-#endregion
+    #endregion
 }

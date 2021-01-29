@@ -31,6 +31,7 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Map001.unity:
     - Class: 1
@@ -60,23 +61,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11856}
+      Script: {instanceID: 11858}
     - Class: 114
-      Script: {instanceID: 11942}
+      Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12216}
+      Script: {instanceID: 12170}
     - Class: 114
-      Script: {instanceID: 12564}
+      Script: {instanceID: 12218}
     - Class: 114
-      Script: {instanceID: 12866}
+      Script: {instanceID: 12566}
     - Class: 114
       Script: {instanceID: 12868}
     - Class: 114
-      Script: {instanceID: 12874}
+      Script: {instanceID: 12870}
     - Class: 114
-      Script: {instanceID: 12976}
+      Script: {instanceID: 12876}
     - Class: 114
-      Script: {instanceID: 13348}
+      Script: {instanceID: 12978}
+    - Class: 114
+      Script: {instanceID: 13350}
     - Class: 114
       Script: {instanceID: 14578}
     - Class: 114
@@ -85,11 +88,15 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15220}
     - Class: 115
       Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -123,23 +130,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 11856}
+      Script: {instanceID: 11858}
     - Class: 114
-      Script: {instanceID: 11942}
+      Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12216}
+      Script: {instanceID: 12170}
     - Class: 114
-      Script: {instanceID: 12564}
+      Script: {instanceID: 12218}
     - Class: 114
-      Script: {instanceID: 12866}
+      Script: {instanceID: 12566}
     - Class: 114
       Script: {instanceID: 12868}
     - Class: 114
-      Script: {instanceID: 12874}
+      Script: {instanceID: 12870}
     - Class: 114
-      Script: {instanceID: 12976}
+      Script: {instanceID: 12876}
     - Class: 114
-      Script: {instanceID: 13348}
+      Script: {instanceID: 12978}
+    - Class: 114
+      Script: {instanceID: 13350}
     - Class: 114
       Script: {instanceID: 14578}
     - Class: 114
@@ -150,11 +159,15 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15220}
     - Class: 115
       Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -247,7 +260,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: 7b3b1e78b7cb24f58ba5223c21e9008f
+      Hash: 06ae3527e2f2225f8d531705e65f6322
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ServerModule
@@ -727,6 +740,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Map001.unity
   - Assets/Scenes/Map002.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Local.app
+  - Assets/Scenes/Map001.unity
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Map002.app

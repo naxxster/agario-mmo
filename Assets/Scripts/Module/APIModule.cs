@@ -9,9 +9,6 @@ public class APIModule
     public static string GAMELIFT_MATCHREQUEST { get { return API_URL + "matchrequest"; } }
     public static string GAMELIFT_MATCHSTATUS {  get { return API_URL + "matchstatus";  } }
 
-
-    //APIModule -> APIModel 로 이동할 MatchmakingRequest
-   
     public class MatchmakingRequest
     {
         // Class for MatchRequest API parameters
