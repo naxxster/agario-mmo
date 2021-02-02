@@ -49,10 +49,14 @@ public class Player : NetworkedBehaviour
     {
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collider Other - " + other);
         InvokeServerRpc(DoEatServerRpc, other.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        ClientModule.Singleton.PlayStatus = 0;
     }
 
     private void PlayerControl()
@@ -62,6 +66,11 @@ public class Player : NetworkedBehaviour
         Vector3 moveVector =
             new Vector3(keyHorizontal * Speed * Time.deltaTime / transform.localScale.x, keyVertical * Speed * Time.deltaTime / transform.localScale.y, 0);
         transform.Translate(moveVector);
+
+        ////Mouse Move
+        //Vector3 Target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Target.z = 0;
+        //transform.position = Vector3.MoveTowards(transform.position, Target, Speed * Time.deltaTime / transform.localScale.x);
     }
 
     private void PlayerCommand()

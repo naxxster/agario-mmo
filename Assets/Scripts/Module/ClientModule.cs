@@ -45,6 +45,8 @@ public class ClientModule : MonoBehaviour
 
     public bool LocalTest;
 
+    public int PlayStatus = 1;
+
     void Awake()
     {
         if (Singleton != null)
@@ -79,6 +81,30 @@ public class ClientModule : MonoBehaviour
     public Button SignInBtn;
     public Button SignUpBtn;
     public Text ConnectionStatus;
+
+    public void OnGUI()
+    {
+        string activeSceneName = SceneManager.GetActiveScene().name;
+        GUI.contentColor = Color.black;
+        if (activeSceneName != "Login")
+        {
+            GUI.Label(new Rect(10, 10, 200, 30), "World Name : " + activeSceneName);
+            string message = "";
+            if (PlayStatus == 0)
+            {
+                message = "Game Status : Game Over";
+            }
+            else if (PlayStatus == 1)
+            {
+                message = "Game Status : Player Alive";
+            }
+            else if (PlayStatus == 2)
+            {
+                message = "Game Status : Player Win";
+            }
+            GUI.Label(new Rect(10, 50, 200, 30), message);
+        }
+    }
 
     public void SetMainUI(UIType uIType)
     {

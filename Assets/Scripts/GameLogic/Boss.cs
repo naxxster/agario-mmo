@@ -24,6 +24,11 @@ public class Boss : NetworkedBehaviour
     {
     }
 
+    private void OnDestroy()
+    {
+        ClientModule.Singleton.PlayStatus = 2;      //Boss Destroy => Player Win
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (IsServer)
@@ -66,7 +71,7 @@ public class Boss : NetworkedBehaviour
 
     IEnumerator WaitForSomeTime()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(5.0f);
         PickPosition();
     }
 
@@ -75,22 +80,25 @@ public class Boss : NetworkedBehaviour
     private void DoEatClientRpc(GameObject target)
     {
         // ClientRPC : Invoke by Server, Run on Client.
-        if (transform.localScale.magnitude >= target.transform.localScale.magnitude)
+        if (target != null)
         {
-            Vector3 newSiz = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            if (target.tag == "Player")
+            if (transform.localScale.magnitude >= target.transform.localScale.magnitude)
             {
-                newSiz += new Vector3(1, 1, 1);
-                Destroy(target);
-                transform.localScale = newSiz;
-                InvokeServerRpc(DoEatServerRpc, target, newSiz);
+                Vector3 newSiz = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                if (target.tag == "Player")
+                {
+                    newSiz += new Vector3(1, 1, 1);
+                    Destroy(target);
+                    transform.localScale = newSiz;
+                    InvokeServerRpc(DoEatServerRpc, target, newSiz);
+                }
             }
-        }
-        else
-        {
-            //Boss Depeated
-            Destroy(gameObject);
-            InvokeServerRpc(BossDefeatServerRpc);
+            else
+            {
+                //Boss Depeated
+                Destroy(gameObject);
+                InvokeServerRpc(BossDefeatServerRpc);
+            }
         }
     }
 

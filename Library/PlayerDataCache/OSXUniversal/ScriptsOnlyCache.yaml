@@ -31,7 +31,6 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/Map001.unity:
     - Class: 1
@@ -65,8 +64,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12170}
-    - Class: 114
       Script: {instanceID: 12218}
     - Class: 114
       Script: {instanceID: 12566}
@@ -81,22 +78,18 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 14578}
+      Script: {instanceID: 14580}
     - Class: 114
-      Script: {instanceID: 15068}
+      Script: {instanceID: 15070}
     - Class: 114
-      Script: {instanceID: 15220}
+      Script: {instanceID: 15222}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -134,8 +127,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11944}
     - Class: 114
-      Script: {instanceID: 12170}
-    - Class: 114
       Script: {instanceID: 12218}
     - Class: 114
       Script: {instanceID: 12566}
@@ -150,24 +141,20 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 14578}
+      Script: {instanceID: 14580}
     - Class: 114
-      Script: {instanceID: 14850}
+      Script: {instanceID: 14852}
     - Class: 114
-      Script: {instanceID: 15068}
+      Script: {instanceID: 15070}
     - Class: 114
-      Script: {instanceID: 15220}
+      Script: {instanceID: 15222}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
       Script: {instanceID: 0}
     - Class: 135
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -596,6 +583,12 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: 7b3b1e78b7cb24f58ba5223c21e9008f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MobileModule
+  - hash:
+      serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -740,6 +733,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Map002.unity
   - Assets/Scenes/Map001.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Map002.app
+  - Assets/Scenes/Map002.unity
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Debug.app

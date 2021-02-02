@@ -1,6 +1,7 @@
 ﻿using MLAPI;
 using MLAPI.Messaging;
 using MLAPI.Transports.UNET;
+using MLAPI.Spawning;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -100,6 +101,10 @@ public class ServerModule : NetworkedBehaviour
     {
         //This runs at Server side
         LogModule.WriteToLogFile("[ServerModule] On Server Started");
+        if (IsServer)
+        {
+            StartCoroutine(SpawnFood());
+        }
     }
 
     private void OnClientConnected(ulong clientId)
@@ -108,7 +113,6 @@ public class ServerModule : NetworkedBehaviour
         if (IsServer)
         {
             LogModule.WriteToLogFile("[ServerModule] On Client Connected - " + clientId);
-            StartCoroutine(SpawnFood());
         }
     }
 
@@ -174,18 +178,25 @@ public class ServerModule : NetworkedBehaviour
 
     private IEnumerator SpawnFood()
     {
-        for (int i = 0; i < 100; i++)
+        while (true)
         {
-            int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
-            int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
+            int playerCount = NetworkingManager.Singleton.ConnectedClients.Count;
+            int foodCount = SpawnManager.SpawnedObjectsList.Count;
+            //Debug.Log("PlayerCount - " + playerCount + ", Food Count - " + foodCount);
+            if (foodCount < 10 || playerCount > foodCount / 2)
+            {
+                //Spawn food only the number of players is more than foodCount/2
+                int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
+                int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
 
-            Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
-            pos.z = 0;
+                Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
+                pos.z = 0;
 
-            //Implement Custom Prefab Spawning
-            GameObject foodObj = Instantiate(FoodPrefab, pos, Quaternion.identity);
-            //Spawn Food Management
-            foodObj.GetComponent<NetworkedObject>().Spawn();
+                //Implement Custom Prefab Spawning
+                GameObject foodObj = Instantiate(FoodPrefab, pos, Quaternion.identity);
+                //Spawn Food Management
+                foodObj.GetComponent<NetworkedObject>().Spawn();
+            }
             yield return new WaitForSeconds(5.0f);
         }
     }
