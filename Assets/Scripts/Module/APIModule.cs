@@ -34,10 +34,12 @@ public class APIModule
 
     public struct MatchstatusRequest
     {
+        public string playerId;
         public string ticketId;
 
-        public MatchstatusRequest(string ticketId)
+        public MatchstatusRequest(string playerId, string ticketId)
         {
+            this.playerId = playerId;
             this.ticketId = ticketId;
         }
     }

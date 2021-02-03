@@ -26,7 +26,7 @@ public class Boss : NetworkedBehaviour
 
     private void OnDestroy()
     {
-        ClientModule.Singleton.PlayStatus = 2;      //Boss Destroy => Player Win
+        ClientModule.Singleton.PlayerStatus = ClientModule.PlayStatus.WIN;      //Boss Destroy => Player Win
     }
 
     void OnTriggerEnter(Collider other)
@@ -84,18 +84,13 @@ public class Boss : NetworkedBehaviour
         {
             if (transform.localScale.magnitude >= target.transform.localScale.magnitude)
             {
-                Vector3 newSiz = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                if (target.tag == "Player")
-                {
-                    newSiz += new Vector3(1, 1, 1);
-                    Destroy(target);
-                    transform.localScale = newSiz;
-                    InvokeServerRpc(DoEatServerRpc, target, newSiz);
-                }
+                //Boss Destroy Everything!
+                Destroy(target);
+                InvokeServerRpc(DoEatServerRpc, target);
             }
             else
             {
-                //Boss Depeated
+                //Boss Defeated
                 Destroy(gameObject);
                 InvokeServerRpc(BossDefeatServerRpc);
             }
@@ -103,10 +98,9 @@ public class Boss : NetworkedBehaviour
     }
 
     [ServerRPC(RequireOwnership = true)]
-    private void DoEatServerRpc(GameObject target, Vector3 size)
+    private void DoEatServerRpc(GameObject target)
     {
         Destroy(target);
-        transform.localScale = size;
     }
 
     [ServerRPC(RequireOwnership = true)]

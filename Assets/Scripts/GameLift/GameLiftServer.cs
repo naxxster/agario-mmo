@@ -18,6 +18,12 @@ public class GameLiftServer
                     LogModule.WriteToLogFile("[GameLift] OnStartGameSession with Parameter=" + gameSession);
                     GameLiftServerAPI.ActivateGameSession();
                 },
+                (gameSession) =>
+                {
+                    //OnUpdateGameSession Callback
+                    //You can implement custom Match update logics using Backfill Ticket, UpdateReason, GameSession data.
+                    LogModule.WriteToLogFile("[GameLift] OnUpdateGameSession with Backfill Ticket=" + gameSession.BackfillTicketId + ", UpdateReason=" + gameSession.UpdateReason);
+                },
                 () =>
                 {
                     //OnProcessTerminate Callback

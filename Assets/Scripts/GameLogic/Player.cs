@@ -47,6 +47,7 @@ public class Player : NetworkedBehaviour
 
     private void ServerInit()
     {
+        ClientModule.Singleton.PlayerStatus = ClientModule.PlayStatus.PLAY;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,7 +57,7 @@ public class Player : NetworkedBehaviour
 
     private void OnDestroy()
     {
-        ClientModule.Singleton.PlayStatus = 0;
+        ClientModule.Singleton.PlayerStatus = ClientModule.PlayStatus.LOSE;
     }
 
     private void PlayerControl()

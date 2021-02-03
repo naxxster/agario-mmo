@@ -17,6 +17,13 @@ public class ClientModule : MonoBehaviour
         NORMAL,
         PLAY
     };
+    public enum PlayStatus
+    {
+        LOSE,
+        PLAY,
+        WIN
+    };
+
     public class ConnectionInfo
     {
         public string Addess = "127.0.0.1";
@@ -45,7 +52,7 @@ public class ClientModule : MonoBehaviour
 
     public bool LocalTest;
 
-    public int PlayStatus = 1;
+    public PlayStatus PlayerStatus = PlayStatus.PLAY;
 
     void Awake()
     {
@@ -90,15 +97,15 @@ public class ClientModule : MonoBehaviour
         {
             GUI.Label(new Rect(10, 10, 200, 30), "World Name : " + activeSceneName);
             string message = "";
-            if (PlayStatus == 0)
+            if (PlayerStatus == PlayStatus.LOSE)
             {
                 message = "Game Status : Game Over";
             }
-            else if (PlayStatus == 1)
+            else if (PlayerStatus == PlayStatus.PLAY)
             {
                 message = "Game Status : Player Alive";
             }
-            else if (PlayStatus == 2)
+            else if (PlayerStatus == PlayStatus.WIN)
             {
                 message = "Game Status : Player Win";
             }
@@ -280,7 +287,8 @@ public class ClientModule : MonoBehaviour
     {
         LogModule.WriteToLogFile("[ClientModule] Send Polling with TicketId - " + this.ClientConnection.TicketId);
         yield return new WaitForSeconds(5.0f);
-        StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHSTATUS, new APIModule.MatchstatusRequest(this.ClientConnection.TicketId), MatchStatusCallback));
+        StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHSTATUS,
+            new APIModule.MatchstatusRequest(this.PlayerId, this.ClientConnection.TicketId), MatchStatusCallback));
     }
 
     private void MatchStatusCallback(string matchstatusResponse)
