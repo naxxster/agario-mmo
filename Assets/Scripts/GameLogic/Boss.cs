@@ -1,5 +1,4 @@
 ﻿using MLAPI;
-using MLAPI.Messaging;
 using System.Collections;
 using UnityEngine;
 
@@ -15,8 +14,11 @@ public class Boss : NetworkedBehaviour
     public override void NetworkStart()
     {
         // This is called when the object is spawned. Once this gets invoked. The object is ready for RPC and var changes.
-        Debug.Log("Boss Spawned!");
-        PickPosition();
+        if (IsServer)
+        {
+            // Server Moves object. Client just renders object's transform.
+            PickPosition();
+        }
     }
 
     // Update is called once per frame
@@ -33,20 +35,34 @@ public class Boss : NetworkedBehaviour
     {
         if (IsServer)
         {
-            InvokeClientRpcOnEveryone(DoEatClientRpc, other.gameObject);
+            GameObject target = other.gameObject;
+
+            if (transform.localScale.magnitude >= target.transform.localScale.magnitude)
+            {
+                //Boss Destroy Everything!
+                Destroy(target);
+            }
+            else
+            {
+                //Boss Defeated
+                Destroy(gameObject);
+            }
         }
     }
 
     private void PickPosition()
     {
-        float z = transform.position.z;
-        float x = Random.Range
-            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
-        float y = Random.Range
-            (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
+        if (IsServer)
+        {
+            float z = transform.position.z;
+            float x = Random.Range
+                (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).x, Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, z)).x);
+            float y = Random.Range
+                (Camera.main.ScreenToWorldPoint(new Vector3(0, 0, z)).y, Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, z)).y);
 
-        BossVector = new Vector3(x, y, z);
-        StartCoroutine(Wandering());
+            BossVector = new Vector3(x, y, z);
+            StartCoroutine(Wandering());
+        }
     }
 
     IEnumerator Wandering()
@@ -73,39 +89,5 @@ public class Boss : NetworkedBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         PickPosition();
-    }
-
-
-    [ClientRPC]
-    private void DoEatClientRpc(GameObject target)
-    {
-        // ClientRPC : Invoke by Server, Run on Client.
-        if (target != null)
-        {
-            if (transform.localScale.magnitude >= target.transform.localScale.magnitude)
-            {
-                //Boss Destroy Everything!
-                Destroy(target);
-                InvokeServerRpc(DoEatServerRpc, target);
-            }
-            else
-            {
-                //Boss Defeated
-                Destroy(gameObject);
-                InvokeServerRpc(BossDefeatServerRpc);
-            }
-        }
-    }
-
-    [ServerRPC(RequireOwnership = true)]
-    private void DoEatServerRpc(GameObject target)
-    {
-        Destroy(target);
-    }
-
-    [ServerRPC(RequireOwnership = true)]
-    private void BossDefeatServerRpc()
-    {
-        Debug.Log("Boss Defeat Action");
     }
 }

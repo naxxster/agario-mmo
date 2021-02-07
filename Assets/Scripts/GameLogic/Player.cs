@@ -80,6 +80,7 @@ public class Player : NetworkedBehaviour
         {
             LogModule.WriteToLogFile("Space Enter");
             string activeSceneName = SceneManager.GetActiveScene().name;
+            ClientModule.Singleton.PlayerStatus = ClientModule.PlayStatus.MOVE;
             if (activeSceneName == "Map001")
             {
                 ClientModule.Singleton.MoveToWorld("Map002");

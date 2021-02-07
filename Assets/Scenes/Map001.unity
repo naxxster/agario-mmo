@@ -252,6 +252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodPrefab: {fileID: 2375768864440514148, guid: 20852ede29196804295051dffd03ac7e,
     type: 3}
+  BossPrefab: {fileID: 4554508802345358210, guid: 52c0abf0d2ad547169db7968c45b8e97,
+    type: 3}
   LocalTest: 0
 --- !u!4 &808912106
 Transform:
@@ -395,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerId: 
   LocalTest: 0
+  PlayerStatus: 1
   NameInputField: {fileID: 0}
   PasswordInputField: {fileID: 0}
   SignInBtn: {fileID: 0}
@@ -488,9 +491,9 @@ MonoBehaviour:
     PlayerPrefabHash:
       Value: 1897319656204293034
     CreatePlayerPrefab: 1
-    ReceiveTickrate: 60
+    ReceiveTickrate: 45
     MaxReceiveEventsPerTickRate: 500
-    EventTickrate: 60
+    EventTickrate: 45
     MaxObjectUpdatesPerTick: -1
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 1

@@ -21,7 +21,8 @@ public class ClientModule : MonoBehaviour
     {
         LOSE,
         PLAY,
-        WIN
+        WIN,
+        MOVE
     };
 
     public class ConnectionInfo
@@ -53,6 +54,8 @@ public class ClientModule : MonoBehaviour
     public bool LocalTest;
 
     public PlayStatus PlayerStatus = PlayStatus.PLAY;
+
+    public APIModule ApiModule = new APIModule();
 
     void Awake()
     {
@@ -99,15 +102,19 @@ public class ClientModule : MonoBehaviour
             string message = "";
             if (PlayerStatus == PlayStatus.LOSE)
             {
-                message = "Game Status : Game Over";
+                message = "Status : Game Over";
             }
             else if (PlayerStatus == PlayStatus.PLAY)
             {
-                message = "Game Status : Player Alive";
+                message = "Status : Player Alive";
             }
             else if (PlayerStatus == PlayStatus.WIN)
             {
-                message = "Game Status : Player Win";
+                message = "Status : Player Win";
+            }
+            else if (PlayerStatus == PlayStatus.MOVE)
+            {
+                message = "Status : Move World";
             }
             GUI.Label(new Rect(10, 50, 200, 30), message);
         }
@@ -251,7 +258,8 @@ public class ClientModule : MonoBehaviour
         }
         this.ClientConnection.Init();
         this.ClientConnection.WorldId = worldId;
-        StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHREQUEST, new APIModule.MatchmakingRequest(this.PlayerId, worldId), MatchRequestCallback));
+        StartCoroutine(HttpModule.PutRequest(ApiModule.GetMatchRequestAPI(),
+            new APIModule.MatchmakingRequest(this.PlayerId, worldId), MatchRequestCallback));
     }
 
     public void ConnectToServer()
@@ -287,7 +295,7 @@ public class ClientModule : MonoBehaviour
     {
         LogModule.WriteToLogFile("[ClientModule] Send Polling with TicketId - " + this.ClientConnection.TicketId);
         yield return new WaitForSeconds(5.0f);
-        StartCoroutine(HttpModule.PutRequest(APIModule.GAMELIFT_MATCHSTATUS,
+        StartCoroutine(HttpModule.PutRequest(ApiModule.GetMatchStatusAPI(),
             new APIModule.MatchstatusRequest(this.PlayerId, this.ClientConnection.TicketId), MatchStatusCallback));
     }
 

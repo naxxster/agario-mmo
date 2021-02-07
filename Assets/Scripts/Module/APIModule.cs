@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class APIModule
 {
-    // 설정 파일에서 읽어오는 구조로 변경할 
-    private static string API_URL = "https://0sos1lsc4c.execute-api.ap-northeast-2.amazonaws.com/prod/";
-    public static string GAMELIFT_MATCHREQUEST { get { return API_URL + "matchrequest"; } }
-    public static string GAMELIFT_MATCHSTATUS {  get { return API_URL + "matchstatus";  } }
+    private string API_URL = "https://0sos1lsc4c.execute-api.ap-northeast-2.amazonaws.com/prod/";
 
     public class MatchmakingRequest
     {
@@ -58,4 +53,46 @@ public class APIModule
         }
     }
 
+    public APIModule()
+    {
+        Dictionary<string, string> arguments = GetCommandLineArguments();
+        if (arguments.ContainsKey("url"))
+        {
+            API_URL = arguments["url"];
+        }
+        LogModule.WriteToLogFile("[APIModule] Given API URL : " + API_URL);
+    }
+
+    private Dictionary<string, string> GetCommandLineArguments()
+    {
+        string[] args = System.Environment.GetCommandLineArgs();
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        string key = null;
+        for (int i = 1; i < args.Length; i++)
+        {
+            if (key != null)
+            {
+                dictionary.Add(key, args[i]);
+                key = null;
+            }
+            else
+            {
+                if (args[i].StartsWith("-"))
+                {
+                    key = args[i].Substring(1);
+                }
+            }
+        }
+        return dictionary;
+    }
+
+    public string GetMatchRequestAPI()
+    {
+        return API_URL + "matchrequest";
+    }
+
+    public string GetMatchStatusAPI()
+    {
+        return API_URL + "matchstatus";
+    }
 }

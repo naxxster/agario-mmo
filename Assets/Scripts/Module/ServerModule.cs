@@ -11,6 +11,7 @@ public class ServerModule : NetworkedBehaviour
 {
     public static ServerModule Singleton { get; protected set; }
     public GameObject FoodPrefab;
+    public GameObject BossPrefab;
     private GameLiftServer GameLift;
 
     private Dictionary<string, string> PlayerSessionMap = new Dictionary<string, string>();
@@ -104,6 +105,10 @@ public class ServerModule : NetworkedBehaviour
         if (IsServer)
         {
             StartCoroutine(SpawnFood());
+            if (SceneManager.GetActiveScene().name == "Map002")
+            {
+                StartCoroutine(SpawnBoss());
+            }
         }
     }
 
@@ -199,6 +204,22 @@ public class ServerModule : NetworkedBehaviour
             }
             yield return new WaitForSeconds(5.0f);
         }
+    }
+
+    private IEnumerator SpawnBoss()
+    {
+        int x = UnityEngine.Random.Range(0, Camera.main.pixelWidth);
+        int y = UnityEngine.Random.Range(0, Camera.main.pixelHeight);
+
+        Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(x, y, 0));
+        pos.z = 0;
+
+        //Implement Custom Prefab Spawning
+        GameObject bossObj = Instantiate(BossPrefab, pos, Quaternion.identity);
+        //Spawn Food Management
+        bossObj.GetComponent<NetworkedObject>().Spawn();
+
+        yield return new WaitForSeconds(1.0f);
     }
 
     public void OnApplicationQuit()

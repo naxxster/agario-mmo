@@ -80,6 +80,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14580}
     - Class: 114
+      Script: {instanceID: 14852}
+    - Class: 114
       Script: {instanceID: 15070}
     - Class: 114
       Script: {instanceID: 15222}
@@ -247,7 +249,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: 06ae3527e2f2225f8d531705e65f6322
+      Hash: ae43cec66ffdcdfb022279c6e6b9a7f7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ServerModule
@@ -643,7 +645,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 81320b96898db8a876b45f88aa12325e
+      Hash: 85737c464b41df06a8723e511c74ee81
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ClientModule
@@ -733,6 +735,6 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 2
   scenePathNames:
-  - Assets/Scenes/Map001.unity
   - Assets/Scenes/Map002.unity
-  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Debug.app
+  - Assets/Scenes/Map001.unity
+  playerPath: /Users/jinspark/Documents/Codes/AgarIO/Build/Linux/Temp/Server.app

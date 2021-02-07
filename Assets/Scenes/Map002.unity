@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerId: 
   LocalTest: 0
+  PlayerStatus: 1
   NameInputField: {fileID: 0}
   PasswordInputField: {fileID: 0}
   SignInBtn: {fileID: 0}
@@ -302,6 +303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FoodPrefab: {fileID: 2375768864440514148, guid: 20852ede29196804295051dffd03ac7e,
     type: 3}
+  BossPrefab: {fileID: 4554508802345358210, guid: 52c0abf0d2ad547169db7968c45b8e97,
+    type: 3}
   LocalTest: 0
 --- !u!4 &597987770
 Transform:
@@ -317,75 +320,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &662053280
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4554508802345358210, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_Name
-      value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554508802345358212, guid: 52c0abf0d2ad547169db7968c45b8e97,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 52c0abf0d2ad547169db7968c45b8e97, type: 3}
 --- !u!1 &1049415793
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,9 +396,9 @@ MonoBehaviour:
     PlayerPrefabHash:
       Value: 1897319656204293034
     CreatePlayerPrefab: 1
-    ReceiveTickrate: 60
+    ReceiveTickrate: 45
     MaxReceiveEventsPerTickRate: 500
-    EventTickrate: 60
+    EventTickrate: 45
     MaxObjectUpdatesPerTick: -1
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 1
