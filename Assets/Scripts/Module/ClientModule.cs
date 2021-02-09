@@ -118,6 +118,10 @@ public class ClientModule : MonoBehaviour
             }
             GUI.Label(new Rect(10, 50, 200, 30), message);
         }
+        if (PlayerStatus == PlayStatus.WIN)
+        {
+            GUI.Label(new Rect(10, 90, 200, 30), "Server will Restart soon!");
+        }
     }
 
     public void SetMainUI(UIType uIType)

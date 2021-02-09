@@ -29,6 +29,7 @@ public class Boss : NetworkedBehaviour
     private void OnDestroy()
     {
         ClientModule.Singleton.PlayerStatus = ClientModule.PlayStatus.WIN;      //Boss Destroy => Player Win
+        ServerModule.Singleton.CloseServer();
     }
 
     void OnTriggerEnter(Collider other)
@@ -68,7 +69,7 @@ public class Boss : NetworkedBehaviour
     IEnumerator Wandering()
     {
         float i = 0.0f;
-        float rate = 1.0f / 1.0f;
+        float rate = 1.0f / 2.0f;
         Vector3 currentPos = transform.position;
 
         while (i < 1.0f)

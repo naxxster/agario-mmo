@@ -222,8 +222,27 @@ public class ServerModule : NetworkedBehaviour
         yield return new WaitForSeconds(1.0f);
     }
 
+    public void CloseServer()
+    {
+        if (IsServer)
+        {
+            StartCoroutine(CloseServerRoutine());
+        }
+    }
+
+    private IEnumerator CloseServerRoutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+        LogModule.WriteToLogFile("[ServerModule] Server will soon restart");
+#if UNITY_EDITOR
+#else
+        Application.Quit();
+#endif
+    }
+
     public void OnApplicationQuit()
     {
+        LogModule.WriteToLogFile("[ServerModule] On Application Quit");
 #if UNITY_EDITOR
 #else
         if (Application.isBatchMode && !LocalTest)
