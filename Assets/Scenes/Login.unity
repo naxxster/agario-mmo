@@ -1139,6 +1139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerId: 
   LocalTest: 0
+  PlayerStatus: 1
   NameInputField: {fileID: 737942237}
   PasswordInputField: {fileID: 909899143}
   SignInBtn: {fileID: 1562486450}
@@ -1382,7 +1383,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573735038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1554712238, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e0c4ec9942864eca900ac87d6318730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MessageBufferSize: 5120
@@ -1405,7 +1406,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573735038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1682170820, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: d7d154d85c1c948ed94e975adb4c7bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DontDestroy: 0
@@ -1415,9 +1416,9 @@ MonoBehaviour:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1573735039}
     RegisteredScenes:
+    - Login
     - Map001
     - Map002
-    - Login
     AllowRuntimeSceneChanges: 0
     NetworkedPrefabs:
     - Prefab: {fileID: 1674007211962181925, guid: b5fdfa3a5d7b245eba86b762383a58c2,

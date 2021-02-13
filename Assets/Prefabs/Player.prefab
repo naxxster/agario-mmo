@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 1674007211962181929}
   - component: {fileID: 1904350369801436491}
   - component: {fileID: 534519269368013158}
-  - component: {fileID: 4993037723832545627}
-  - component: {fileID: -8976328085034333679}
+  - component: {fileID: 7050189893987831786}
+  - component: {fileID: 6583220160899372103}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,7 +82,7 @@ MonoBehaviour:
   Boss: Boss
   Increase: 0.1
   Channel: MLAPI_DEFAULT_MESSAGE
---- !u!114 &4993037723832545627
+--- !u!114 &7050189893987831786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674007211962181925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 209037615, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cda8cfd601d2475b88c3256c0aa74de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkedInstanceId: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   PrefabHashGenerator: Player
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
---- !u!114 &-8976328085034333679
+--- !u!114 &6583220160899372103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674007211962181925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -410691123, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: b1490d018b23243f18a1756b30cc3d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FixedSendsPerSecond: 20

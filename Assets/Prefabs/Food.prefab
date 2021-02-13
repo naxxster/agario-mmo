@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5907155108198279555}
   - component: {fileID: 2434398747583656749}
   - component: {fileID: 7491751948149949981}
-  - component: {fileID: -3388082168728912872}
+  - component: {fileID: 6481473176311989407}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -113,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-3388082168728912872
+--- !u!114 &6481473176311989407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2375768864440514148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 209037615, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cda8cfd601d2475b88c3256c0aa74de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkedInstanceId: 0

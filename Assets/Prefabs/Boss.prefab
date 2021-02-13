@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 4554508802345358215}
   - component: {fileID: 4554508802345358208}
   - component: {fileID: 4554508802345358209}
-  - component: {fileID: 4554508802345358214}
-  - component: {fileID: -201474344068820784}
+  - component: {fileID: 7439402004900032849}
+  - component: {fileID: 5531429982195674076}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d37d79d1b7ed43e59a68db79c8f5130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4554508802345358214
+--- !u!114 &7439402004900032849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4554508802345358210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 209037615, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cda8cfd601d2475b88c3256c0aa74de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkedInstanceId: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   PrefabHashGenerator: Boss
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
---- !u!114 &-201474344068820784
+--- !u!114 &5531429982195674076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4554508802345358210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -410691123, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: b1490d018b23243f18a1756b30cc3d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FixedSendsPerSecond: 20

@@ -329,8 +329,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1049415796}
-  - component: {fileID: 1049415795}
   - component: {fileID: 1049415794}
+  - component: {fileID: 1049415795}
   m_Layer: 0
   m_Name: NetworkingManager
   m_TagString: Untagged
@@ -347,30 +347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1049415793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1554712238, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MessageBufferSize: 5120
-  MaxConnections: 100
-  ConnectAddress: 0.0.0.0
-  ConnectPort: 8888
-  ServerListenPort: 8888
-  ServerWebsocketListenPort: 8887
-  SupportWebsocket: 0
-  Channels: []
-  UseMLAPIRelay: 0
-  MLAPIRelayAddress: 184.72.104.138
-  MLAPIRelayPort: 8888
---- !u!114 &1049415795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049415793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1682170820, guid: 01701b64234b4d523d8045142cbc73fa, type: 3}
+  m_Script: {fileID: 11500000, guid: d7d154d85c1c948ed94e975adb4c7bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DontDestroy: 0
@@ -378,10 +355,10 @@ MonoBehaviour:
   LogLevel: 1
   NetworkConfig:
     ProtocolVersion: 0
-    NetworkTransport: {fileID: 1049415794}
+    NetworkTransport: {fileID: 1049415795}
     RegisteredScenes:
-    - Map001
     - Map002
+    - Map001
     AllowRuntimeSceneChanges: 0
     NetworkedPrefabs:
     - Prefab: {fileID: 1674007211962181925, guid: b5fdfa3a5d7b245eba86b762383a58c2,
@@ -396,9 +373,9 @@ MonoBehaviour:
     PlayerPrefabHash:
       Value: 1897319656204293034
     CreatePlayerPrefab: 1
-    ReceiveTickrate: 45
+    ReceiveTickrate: 60
     MaxReceiveEventsPerTickRate: 500
-    EventTickrate: 45
+    EventTickrate: 60
     MaxObjectUpdatesPerTick: -1
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 1
@@ -421,6 +398,29 @@ MonoBehaviour:
     EnableEncryption: 0
     SignKeyExchange: 0
     ServerBase64PfxCertificate: 
+--- !u!114 &1049415795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049415793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0c4ec9942864eca900ac87d6318730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MessageBufferSize: 5120
+  MaxConnections: 100
+  ConnectAddress: 127.0.0.1
+  ConnectPort: 8888
+  ServerListenPort: 8888
+  ServerWebsocketListenPort: 8887
+  SupportWebsocket: 0
+  Channels: []
+  UseMLAPIRelay: 0
+  MLAPIRelayAddress: 184.72.104.138
+  MLAPIRelayPort: 8888
 --- !u!4 &1049415796
 Transform:
   m_ObjectHideFlags: 0
