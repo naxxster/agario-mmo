@@ -17,6 +17,11 @@ This sample includes how to implement persistent game server based on Amazon Gam
  - Add large match rules
  - Design Workshop
 
+### Installation
+
+ - Clone this Repository include submodule(MLAPI)
+ - Install GameLift SDK
+
 License
 ----
 MIT
